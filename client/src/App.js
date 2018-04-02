@@ -3,9 +3,12 @@ import './App.css';
 
 class App extends Component {
   // Initialize state
-  state = {
-    passwords: [],
-    test: []
+  constructor() {
+    super();
+    this.state = {
+      passwords: [],
+      test: null
+    };
   }
 
   // Fetch passwords after first mount
@@ -24,9 +27,12 @@ class App extends Component {
   getTest() {
     fetch('/api/test')
       .then(res => res.json())
-      .then(test => this.setState({
-        test
-      }));
+      .then((res) => {
+        this.setState({
+          test: res.data.test,
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -35,9 +41,10 @@ class App extends Component {
     return (
       <div className="App">
         {/* Render the passwords if we have them */}
-        {passwords.length ? (
+        {(passwords.length && this.state.test !== null) ? (
           <div>
             <h1>5 Passwords.</h1>
+            <p>{this.state.test[0].amount}</p>
             <ul className="passwords">
               {/*
                 Generally it's bad to use "index" as a key.
