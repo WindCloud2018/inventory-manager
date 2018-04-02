@@ -1,6 +1,9 @@
+!('NODE_ENV' in process.env) && require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const generatePassword = require('password-generator');
+
+const testRoutes = require('./routes/testroutes.js')
 
 const app = express();
 
@@ -21,6 +24,9 @@ app.get('/api/passwords', (req, res) => {
 
   console.log(`Sent ${count} passwords`);
 });
+
+//testing routers with local db
+app.use('/api/test', testRoutes);
 
 // the "catchall" handelr: for any request that doesn't
 // match one above, send back React's index.html file.

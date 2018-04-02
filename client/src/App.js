@@ -3,11 +3,15 @@ import './App.css';
 
 class App extends Component {
   // Initialize state
-  state = { passwords: [] }
+  state = {
+    passwords: [],
+    test: []
+  }
 
   // Fetch passwords after first mount
   componentDidMount() {
     this.getPasswords();
+    this.getTest();
   }
 
   getPasswords = () => {
@@ -15,6 +19,14 @@ class App extends Component {
     fetch('/api/passwords')
       .then(res => res.json())
       .then(passwords => this.setState({ passwords }));
+  }
+
+  getTest() {
+    fetch('/api/test')
+      .then(res => res.json())
+      .then(test => this.setState({
+        test
+      }));
   }
 
   render() {
