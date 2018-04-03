@@ -26,9 +26,13 @@ cd client
 ```
 npm i
 ```
+* Go back to root folder
+```
+cd ..
+```
 
 ### How to setup Express server
-* Create .env and setup following:
+* Create .env in project root and setup following:
 ```
 DB_HOST=localhost
 DB_PORT=5432
