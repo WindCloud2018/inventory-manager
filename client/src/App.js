@@ -6,22 +6,21 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      passwords: [],
-      test: null
+      test: null,
+      amount: 12345,
+      description: 'tester',
+      asset: true,
+      category_id: 1,
+      dataLoaded: false
     };
+    this.getTest = this.getTest.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   // Fetch passwords after first mount
   componentDidMount() {
-    this.getPasswords();
     this.getTest();
-  }
-
-  getPasswords = () => {
-    // Get the passwords and store them in state
-    fetch('/api/passwords')
-      .then(res => res.json())
-      .then(passwords => this.setState({ passwords }));
   }
 
   getTest() {
@@ -30,50 +29,55 @@ class App extends Component {
       .then((res) => {
         this.setState({
           test: res.data.test,
+          dataLoaded: true
         });
       })
       .catch(err => console.log(err));
   }
 
-  render() {
-    const { passwords } = this.state;
+  testCreate(event, data) {
+    console.log(data)
+    event.preventDefault();
+    fetch('/api/test', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+      .then(res => {
+        this.getTest();
+      });
+  }
 
+  handleChange(e) {
+    const name = e.target.name;
+    const val = e.target.value;
+    this.setState({
+      [name]: val,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    {this.testCreate(e, this.state)}
+  }
+
+  render() {
     return (
       <div className="App">
-        {/* Render the passwords if we have them */}
-        {(passwords.length && this.state.test !== null) ? (
-          <div>
-            <h1>5 Passwords.</h1>
-            <p>{this.state.test[0].amount}</p>
-            <ul className="passwords">
-              {/*
-                Generally it's bad to use "index" as a key.
-                It's ok for this example because there will always
-                be the same number of passwords, and they never
-                change positions in the array.
-              */}
-              {passwords.map((password, index) =>
-                <li key={index}>
-                  {password}
-                </li>
-              )}
-            </ul>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Get More
-            </button>
-          </div>
+        {this.state.dataLoaded === true ? (
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <input className="submitTitle" type="text" name="amount" value={this.state.amount} placeholder="Amount" onChange={this.handleChange} />
+                <br/>
+              <input className="submitPost" type="text" name="description" value={this.state.description} placeholder="Description" onChange={this.handleChange} />
+            </label>
+            <br/>
+            <input className="submitButton" type="submit" value="Submit" />
+          </form>
         ) : (
-          // Render a helpful message otherwise
-          <div>
-            <h1>No passwords :(</h1>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Try Again?
-            </button>
-          </div>
+          <p> Loading </p>
         )}
       </div>
     );

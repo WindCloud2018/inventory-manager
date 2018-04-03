@@ -5,11 +5,26 @@ module.exports = {
     testDB.findAll()
       .then((test) => {
         res.status(200).json({
-          data: {
-            test,
-          },
+          data: { test }
         });
       })
       .catch(err => next(err));
-  }
+  },
+
+  testCreate(req, res, next) {
+    console.log(req.body);
+    testDB.save({
+      amount: req.body.amount,
+      description: req.body.description,
+      asset: req.body.asset,
+      category_id: req.body.category_id,
+    })
+      .then((test) => {
+        res.json({
+          message: 'landmark added successfully!',
+          data: { test },
+        });
+      })
+      .catch(err => next(err));
+  },
 };
