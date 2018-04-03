@@ -4,6 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const port = process.env.PORT || 5000;
 
 const testRoutes = require('./routes/testroutes.js')
 
@@ -15,23 +16,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(logger('dev'));
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
-//Put all API endpoints under '/api'
-app.get('/api/passwords', (req, res) => {
-  const count = 5;
-
-  // Generate some passwords
-  const passwords = Array.from(Array(count).keys()).map(i =>
-    generatePassword(12, false)
-  )
-
-  // return them as json
-  res.json(passwords);
-
-  console.log(`Sent ${count} passwords`);
-});
 
 //testing routers with local db
 app.use('/api/test', testRoutes);
@@ -42,7 +27,4 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-const port = process.env.PORT || 5000;
 app.listen(port);
-
-console.log(`Password generator listening on ${port}`);
