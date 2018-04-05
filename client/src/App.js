@@ -6,11 +6,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      test: null,
-      amount: 12345,
-      description: 'tester',
-      asset: true,
-      category_id: 1,
+      tests: null,
+      title: '',
+      description: '',
       dataLoaded: false
     };
     this.getTest = this.getTest.bind(this);
@@ -28,7 +26,7 @@ class App extends Component {
       .then(res => res.json())
       .then((res) => {
         this.setState({
-          test: res.data.test,
+          tests: res.data.test,
           dataLoaded: true
         });
       })
@@ -36,7 +34,6 @@ class App extends Component {
   }
 
   testCreate(event, data) {
-    console.log(data)
     event.preventDefault();
     fetch('/api/test', {
       method: 'POST',
@@ -63,19 +60,50 @@ class App extends Component {
     {this.testCreate(e, this.state)}
   }
 
+  deleteTest(id) {
+    const rootUrl = window.location.origin;
+    const pathUrl = `/api/test/${id}`;
+    const newUrl = rootUrl.concat(pathUrl);
+    // const newUrl = window.location.pathname.slice(0,1);
+    fetch(newUrl, {
+      method: 'DELETE',
+    }).then(res => res.json())
+      .then(res => {
+        this.getTest();
+      });
+  }
+
+  editTest(id) {
+
+  }
+
   render() {
     return (
       <div className="App">
         {this.state.dataLoaded === true ? (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              <input className="submitTitle" type="text" name="amount" value={this.state.amount} placeholder="Amount" onChange={this.handleChange} />
-                <br/>
-              <input className="submitPost" type="text" name="description" value={this.state.description} placeholder="Description" onChange={this.handleChange} />
-            </label>
-            <br/>
-            <input className="submitButton" type="submit" value="Submit" />
-          </form>
+          <div>
+            {this.state.tests.map((test, i) => (
+              <div key={test.id}>
+                <p>{test.title}</p>
+                <p>{test.description}</p>
+                <button onClick={(id) =>
+                  this.editTest(test.id)
+                }>Edit</button>
+                <button onClick={(id) =>
+                  this.deleteTest(test.id)
+                }>Delete</button>
+              </div>
+            ))}
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                <input className="submitTitle" type="text" name="title" value={this.state.title} placeholder="Title" onChange={this.handleChange} />
+                  <br/>
+                <input className="submitPost" type="text" name="description" value={this.state.description} placeholder="Description" onChange={this.handleChange} />
+              </label>
+              <br/>
+              <input className="submitButton" type="submit" value="Submit" />
+            </form>
+          </div>
         ) : (
           <p> Loading </p>
         )}

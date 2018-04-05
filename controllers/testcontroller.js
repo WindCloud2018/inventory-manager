@@ -11,20 +11,52 @@ module.exports = {
       .catch(err => next(err));
   },
 
+  getOne(req, res, next) {
+    testDB.findOne(req.params.id)
+      .then((test) => {
+        res.status(200).json({
+          data: { test }
+        });
+      })
+      .catch(err => next(err));
+  },
+
   testCreate(req, res, next) {
-    console.log(req.body);
     testDB.save({
-      amount: req.body.amount,
-      description: req.body.description,
-      asset: req.body.asset,
-      category_id: req.body.category_id,
+      title: req.body.title,
+      description: req.body.description
     })
       .then((test) => {
         res.json({
-          message: 'landmark added successfully!',
           data: { test },
         });
       })
       .catch(err => next(err));
   },
+
+  testUpdate(req, res, next) {
+    testDB.findOne(req.params.id)
+      .then((test) => {
+        return test.update({
+          title: req.body.title,
+          description: req.body.description
+        });
+      })
+      .then((test) => {
+        res.status(202).json({
+          data: { test }
+        });
+      })
+      .catch(err => next(err));
+  },
+
+  testDelete(req, res, next) {
+    testDB.destroy(req.params.id)
+      .then(() => {
+        res.status(202).json({
+          message: 'Test deleted',
+        });
+      })
+      .catch(err => next(err));
+  }
 };

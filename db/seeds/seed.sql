@@ -1,25 +1,12 @@
-\c pocketdb;
+\c tester_db;
 
-INSERT INTO categories(category)
+INSERT INTO testers(title, description)
   VALUES
   (
-    'Income'
+    'Tester1',
+    'Testing tester1'
   ),
   (
-    'Rent'
-  );
-
-INSERT INTO balances(amount, description, asset, category_id)
-  VALUES
-  (
-    50000,
-    'Work',
-    TRUE,
-    1
-  ),
-  (
-    2000,
-    'Rent',
-    FALSE,
-    2
+    'Tester2',
+    'Testing tester2'
   );

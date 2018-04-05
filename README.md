@@ -8,7 +8,7 @@
 * [create-react-app](https://github.com/facebook/create-react-app) - React Starter Pack.
 * [Heroku](https://devcenter.heroku.com/) - Deployment platform and documentations
 
-### Starter included testing route
+### Starter included full CRUD testing route
 
 ### How to get start
 * Make sure got NodeJS and npm installed
