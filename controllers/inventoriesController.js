@@ -4,10 +4,10 @@ module.exports = {
 
   inventoryIndex(req, res, next) {
     inventoriesDB.findAll()
-      .then((inventory) => {
+      .then((inventories) => {
         res.status(200).json({
           message: 'Inventory data loaded',
-          data: { inventory }
+          data: { inventories }
         });
       })
       .catch(err => next(err));

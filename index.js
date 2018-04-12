@@ -6,8 +6,9 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const port = process.env.PORT || 5000;
 
-const unitRoutes = require('./routes/unitRoutes');
-const inventoryRoutes = require('./routes/inventoryRoutes');
+const ordersRoute = require('./routes/ordersRoute');
+const unitsRoute = require('./routes/unitsRoute');
+const inventoriesRoute = require('./routes/inventoriesRoute');
 
 const app = express();
 
@@ -19,9 +20,11 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/units', unitRoutes);
+app.use('/api/orders', ordersRoute);
 
-app.use('/api/inventories', inventoryRoutes);
+app.use('/api/units', unitsRoute);
+
+app.use('/api/inventories', inventoriesRoute);
 
 // the "catchall" handeler: for any request that doesn't
 // match one above, send back React's index.html file.
