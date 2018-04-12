@@ -1,12 +1,46 @@
-\c tester_db;
+\c inventory_db;
 
-INSERT INTO testers(title, description)
+INSERT INTO units(unit)
+  VALUES
+  ( 'ounce' ),
+  ( 'pint' ),
+  ( 'quarter' ),
+  ( 'gallon' ),
+  ( 'pound' ),
+  ( 'kilogram' ),
+  ( 'fluid ounce'),
+  ( 'pack' ),
+  ( 'bag' ),
+  ( 'box' );
+
+
+INSERT INTO inventories(inventory, quantity, cost_per_unit, unit_id, low_stock)
   VALUES
   (
-    'Tester1',
-    'Testing tester1'
+    'bun',
+    100,
+    2,
+    9,
+    'false'
   ),
   (
-    'Tester2',
-    'Testing tester2'
+    'lettuce',
+    50,
+    5,
+    5,
+    'false'
+  ),
+  (
+    'tomato',
+    40,
+    1,
+    5,
+    'false'
+  ),
+  (
+    'cheese',
+    50,
+    3,
+    8,
+    'false'
   );

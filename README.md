@@ -1,14 +1,6 @@
-# Tutorial for Express and React with Heroku Deployment.
+# Inventory Manager
 
-## Starter pack for Express backend with React frontend using create-react-app, and deploy to Heroku with postgresql database.
-
-## Technologies
-* [Axios](https://www.npmjs.com/package/axios) - API Calls.
-* [Express](https://expressjs.com/) - NodeJS library.
-* [create-react-app](https://github.com/facebook/create-react-app) - React Starter Pack.
-* [Heroku](https://devcenter.heroku.com/) - Deployment platform and documentations
-
-### Starter included full CRUD testing route
+Manage your restaurant inventory to reduce waste, calculate profit, and forecast.
 
 ### How to get start
 * Make sure got NodeJS and npm installed
@@ -42,11 +34,11 @@ DB_NAME=name of your database
 ### How to start local environment
 * Start local server
 ```
-npm run dev
+npm run start
 ```
 * Start local front-end
 ```
-npm run start
+npm run dev
 ```
 
 ### How to deploy to Heroku with Git
@@ -77,4 +69,16 @@ heroku pg:push localdatabase DATABASE/HEROKU_DATABASE_NAME
 ```
 * Check [this guide](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup) for more details.
 
+## Built With
 
+* [Reactstrap](https://reactstrap.github.io/) - React Bootstrap components.
+* [React Chart.js](https://github.com/reactjs/react-chartjs) - For charts.
+* [Axios](https://www.npmjs.com/package/axios) - API Calls.
+* [Express](https://expressjs.com/) - NodeJS library.
+* [create-react-app](https://github.com/facebook/create-react-app) - React Starter Pack.
+* [Heroku](https://devcenter.heroku.com/) - Deployment platform and documentations
+
+## Authors
+
+* **Carson Chen** (https://github.com/carsoncychen)
+* **Nian Liu** (https://github.com/nianliu18)
