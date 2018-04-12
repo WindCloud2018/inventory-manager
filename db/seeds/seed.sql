@@ -14,33 +14,29 @@ INSERT INTO units(unit)
   ( 'box' );
 
 
-INSERT INTO inventories(inventory, quantity, cost_per_unit, unit_id, low_stock)
+INSERT INTO inventories(inventory, quantity, cost_per_unit, unit_id)
   VALUES
   (
     'bun',
     100,
     2,
-    9,
-    'false'
+    9
   ),
   (
     'lettuce',
     50,
     5,
-    5,
-    'false'
+    5
   ),
   (
     'tomato',
     40,
     1,
-    5,
-    'false'
+    5
   ),
   (
     'cheese',
     50,
     3,
-    8,
-    'false'
+    8
   );

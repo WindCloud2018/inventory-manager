@@ -14,5 +14,5 @@ CREATE TABLE inventories (
   quantity REAL NOT NULL,
   cost_per_unit REAL NOT NULL,
   unit_id INT NOT NULL REFERENCES units(unit_id),
-  low_stock BOOLEAN
+  low_stock BOOLEAN DEFAULT FALSE
 );
