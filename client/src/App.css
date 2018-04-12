@@ -1,0 +1,42 @@
+@import "./css/Header.css";
+@import "./css/Dashboard.css";
+@import "./css/Footer.css";
+@import "./css/Sidebar.css";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #FFE599;
+}
+
+.header {
+  grid-area: header;
+  text-align: center;
+}
+
+.sidebar {
+  grid-area: sidebar;
+
+}
+
+.footer {
+  grid-area: footer;
+  text-align: center;
+}
+
+.body-container{
+  grid-area: body-container;
+  text-align: center;
+  min-height: 600px;
+  align-content: left;
+}
+
+
+.App {
+  display: grid;
+  grid-template-columns: 200px 1fr auto auto auto;
+  grid-template-rows: 1fr auto auto;
+  grid-template-areas:
+    "sidebar header header header header"
+    "sidebar body-container body-container body-container body-container"
+    "sidebar footer footer footer footer"
+}
