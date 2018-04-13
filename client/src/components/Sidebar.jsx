@@ -9,10 +9,10 @@ const Sidebar = props => {
       <h3> This is sidebar </h3>
       <Nav className="sidenav">
         <NavItem className="nav-link">
-          <NavLink to="/dashboard"> Update Inventory </NavLink>
+          <NavLink to="/"> Sales </NavLink>
         </NavItem>
         <NavItem className="nav-link">
-          <NavLink to="/"> Sales </NavLink>
+          <NavLink to="/dashboard">Inventory </NavLink>
         </NavItem>
       </Nav>
     </div>

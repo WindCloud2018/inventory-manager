@@ -35,49 +35,35 @@ INSERT INTO orders(order_quantity, patty_used, cheese_used, tomato_used, lettuce
     1
   );
 
-INSERT INTO units(unit)
-  VALUES
-  ( 'ounce' ),
-  ( 'pint' ),
-  ( 'quarter' ),
-  ( 'gallon' ),
-  ( 'pound' ),
-  ( 'kilogram' ),
-  ( 'fluid ounce'),
-  ( 'pack' ),
-  ( 'bag' ),
-  ( 'box' );
-
-
-INSERT INTO inventories(inventory, inventory_quantity, cost_per_unit, unit_id)
+INSERT INTO inventories(inventory, inventory_quantity, cost_per_unit, bulk_price)
   VALUES
   (
     'bun',
     100,
-    2,
-    9
+    1.05,
+    105
   ),
   (
     'patty',
     100,
-    2,
-    8
+    0.52,
+    52
   ),
   (
     'lettuce',
-    50,
-    5,
-    5
+    100,
+    0.12,
+    12
   ),
   (
     'tomato',
-    40,
-    1,
-    5
+    200,
+    0.07,
+    14
   ),
   (
     'cheese',
-    50,
-    3,
-    8
+    200,
+    0.25,
+    50
   );
