@@ -35,40 +35,7 @@ INSERT INTO orders(order_quantity, patty_used, cheese_used, tomato_used, lettuce
     1
   );
 
-INSERT INTO inventories(inventory, inventory_quantity, cost_per_unit, bulk_price)
-  VALUES
-  (
-    'Bun',
-    100,
-    1.05,
-    105
-  ),
-  (
-    'Patty',
-    100,
-    0.52,
-    52
-  ),
-  (
-    'Lettuce',
-    100,
-    0.12,
-    12
-  ),
-  (
-    'Tomato',
-    200,
-    0.07,
-    14
-  ),
-  (
-    'Cheese',
-    200,
-    0.25,
-    50
-  );
-
-INSERT INTO categories(item)
+INSERT INTO items(item)
 VALUES
 (
   'Bun'
@@ -86,26 +53,59 @@ VALUES
   'Cheese'
 );
 
+INSERT INTO inventories(inventory, inventory_quantity, item_id)
+  VALUES
+  (
+    'Bun',
+    100,
+    1
+  ),
+  (
+    'Patty',
+    100,
+    2
+  ),
+  (
+    'Lettuce',
+    100,
+    3
+  ),
+  (
+    'Tomato',
+    200,
+    4
+  ),
+  (
+    'Cheese',
+    200,
+    5
+  );
 
-INSERT INTO inventory_costs(inventory_quantity, inventory_purchase)
+
+INSERT INTO inventory_costs(inventory_quantity, cost_per_unit, inventory_purchase, item_id)
 VALUES
 (
   100,
-  105
+  105,
+  1
 ),
 (
   100,
-  52
+  52,
+  2
 ),
 (
   100,
-  12
+  12,
+  3
 ),
 (
   200,
-  14
+  14,
+  4
 ),
 (
   200,
-  50
+  50,
+  5
 );
