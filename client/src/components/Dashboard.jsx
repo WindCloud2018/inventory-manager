@@ -4,8 +4,8 @@ import FormInput from './FormInput';
 import Inventory from './Inventory';
 
 class Dashboard extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
   }
 
@@ -14,10 +14,11 @@ class Dashboard extends Component {
 
 
   render(){
+    console.log(this.props)
     return (
       <div className="dashboard">
-        <FormInput />
-        <Inventory />
+        <FormInput {...this.props}/>
+        <Inventory {...this.props}/>
       </div>
     );
   }

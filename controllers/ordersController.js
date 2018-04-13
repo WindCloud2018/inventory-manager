@@ -7,7 +7,7 @@ module.exports = {
       .then((orders) => {
         res.status(200).json({
           message: 'order data loaded',
-          data: { orders }
+          orders
         });
       })
       .catch(err => next(err));
@@ -18,7 +18,7 @@ module.exports = {
       .then((order) => {
         res.json({
           message: 'Find one order',
-          data: { order }
+          order
         })
       }).catch(err => next(err));
   },
@@ -35,7 +35,7 @@ module.exports = {
     .then((order) => {
       res.json({
         message: 'New order created',
-        data: { order }
+        order
       });
     })
     .catch(err => next(err));
@@ -46,7 +46,7 @@ module.exports = {
       .then((order) => {
         res.json({
           message: 'order updated',
-          data: { order }
+          order
         })
       })
       .catch(err => next(err));

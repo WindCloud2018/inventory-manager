@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Axios from 'axios';
+import axios from 'axios';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -16,16 +16,54 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      inventory: null,
+      orders: null,
+      units: null,
+      inventories: null,
       dataLoaded: false
     }
+    this.getOrders = this.getOrders.bind(this);
+    this.getUnits = this.getUnits.bind(this);
+    this.getInventories = this.getInventories.bind(this);
   }
 
-  componentDidMount() {
-
+  componentDidMount(){
+    this.getOrders();
+    this.getUnits();
+    this.getInventories();
   }
 
+//information coming thru
+  getOrders(){
+    axios.get('/api/orders')
+      .then(res => {
+        this.setState({
+          orders: res.data.orders
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
+//information comes thru.
+  getUnits(){
+    axios.get('/api/units')
+      .then(res => {
+        this.setState({
+          units: res.data.units
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+//information comes thru
+  getInventories(){
+    axios.get('/api/inventories')
+      .then(res => {
+        this.setState({
+          inventories: res.data.inventories
+        })
+      })
+      .catch(err => console.log(err))
+  }
 
 
   render() {
@@ -43,7 +81,11 @@ class App extends Component {
           <Route
             exact
             path='/dashboard'
-            render={props => <Dashboard {...props} />}
+            render={props => <Dashboard {...props}
+                    inventories={this.state.inventories}
+                    orders={this.state.orders}
+                    units={this.state.units}
+                    />}
           />
 
         </Switch>

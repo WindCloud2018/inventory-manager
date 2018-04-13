@@ -7,7 +7,7 @@ module.exports = {
       .then((inventories) => {
         res.status(200).json({
           message: 'Inventory data loaded',
-          data: { inventories }
+          inventories
         });
       })
       .catch(err => next(err));
@@ -18,7 +18,7 @@ module.exports = {
       .then((inventory) => {
         res.json({
           message: 'Find one inventory',
-          data: { inventory }
+          inventory
         })
       }).catch(err => next(err));
   },
@@ -33,7 +33,7 @@ module.exports = {
     .then((inventory) => {
       res.json({
         message: 'New inventory created',
-        data: { inventory }
+        inventory
       });
     })
     .catch(err => next(err));
@@ -44,7 +44,7 @@ module.exports = {
       .then((inventory) => {
         res.json({
           message: 'Inventory updated',
-          data: { inventory }
+          inventory
         })
       })
       .catch(err => next(err));

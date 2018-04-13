@@ -4,10 +4,10 @@ module.exports = {
 
   unitIndex(req, res, next) {
     unitsDB.findAll()
-      .then((unit) => {
+      .then((units) => {
         res.status(200).json({
           message: 'unit data loaded',
-          data: { unit }
+          units
         });
       })
       .catch(err => next(err));
@@ -20,7 +20,7 @@ module.exports = {
     .then((unit) => {
       res.json({
         message: 'New unit created',
-        data: { unit }
+        unit
       });
     })
     .catch(err => next(err));
@@ -31,7 +31,7 @@ module.exports = {
       .then((unit) => {
         res.json({
           message: 'Find one unit',
-          data: { unit }
+          unit
         })
       }).catch(err => next(err));
   },
@@ -41,7 +41,7 @@ module.exports = {
       .then((unit) => {
         res.json({
           message: 'unit updated',
-          data: { unit }
+          unit
         })
       })
       .catch(err => next(err));
