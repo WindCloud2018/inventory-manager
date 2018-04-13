@@ -59,22 +59,24 @@ class App extends Component {
         <Header />
         <Sidebar />
         <div className="body-container">
-         <Switch>
-          <Route
-            exact
-            path='/'
-            render={props => <Sales {...props} />}
-          />
-          <Route
-            path='/dashboard'
-            render={props => <Dashboard {...props}
+        {this.state.dataLoaded === true ? (
+          <Switch>
+            <Route
+              exact
+              path='/'
+              render={props => <Sales {...props} />}
+            />
+            <Route
+              path='/dashboard'
+              render={props => <Dashboard {...props}
                     inventories={this.state.inventories}
                     orders={this.state.orders}
-                    dataLoaded={this.state.dataLoaded}
                     />}
-          />
-
-        </Switch>
+            />
+          </Switch>
+        ) : (
+          <p> Loading.... </p>
+        )}
         </div>
 
         <Footer />

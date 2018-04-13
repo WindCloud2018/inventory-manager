@@ -1,8 +1,9 @@
 \c inventory_db;
 
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS units;
 DROP TABLE IF EXISTS inventories;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS inventory_costs;
 
 CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
@@ -22,4 +23,16 @@ CREATE TABLE inventories (
   cost_per_unit REAL NOT NULL,
   bulk_price REAL NOT NULL,
   low_stock BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE categories (
+  category_id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL
+);
+
+CREATE TABLE inventory_costs (
+  inventory_cost_id SERIAL PRIMARY KEY,
+  inventory_quantity REAL NOT NULL,
+  inventory_purchase REAL NOT NULL,
+  inventory_date TIMESTAMP NOT NULL DEFAULT NOW()
 );

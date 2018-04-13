@@ -4,13 +4,6 @@ import FormInput from './FormInput';
 import Inventory from './Inventory';
 
 class Dashboard extends Component {
-  constructor(props){
-    super(props);
-
-  }
-
-
-
 
 
   render(){
