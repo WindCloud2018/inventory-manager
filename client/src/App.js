@@ -48,8 +48,7 @@ class App extends Component {
     axios.get('/api/units')
       .then(res => {
         this.setState({
-          units: res.data.units,
-          dataLoaded: true
+          units: res.data.units
         })
       })
       .catch(err => console.log(err))
@@ -60,7 +59,8 @@ class App extends Component {
     axios.get('/api/inventories')
       .then(res => {
         this.setState({
-          inventories: res.data.inventories
+          inventories: res.data.inventories,
+          dataLoaded: true
         })
       })
       .catch(err => console.log(err))
@@ -85,6 +85,7 @@ class App extends Component {
                     inventories={this.state.inventories}
                     orders={this.state.orders}
                     units={this.state.units}
+                    dataLoaded={this.state.dataLoaded}
                     />}
           />
 
