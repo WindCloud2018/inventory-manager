@@ -78,7 +78,7 @@ INSERT INTO inventories(inventory, inventory_quantity, item_id)
   );
 
 
-INSERT INTO inventory_costs(inventory_quantity, cost_per_unit, inventory_purchase, item_id)
+INSERT INTO inventory_costs(inventory_quantity, cost_per_unit, item_id)
 VALUES
 (
   100,
