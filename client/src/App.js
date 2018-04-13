@@ -22,6 +22,8 @@ class App extends Component {
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
+    this.salesCreate = this.salesCreate.bind(this);
+    this.updateInventoryQuantity = this.updateInventoryQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -52,6 +54,14 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  salesCreate(data) {
+    console.log(data);
+  }
+
+  updateInventoryQuantity(data) {
+    console.log(data);
+  }
+
 
   render() {
     return (
@@ -59,26 +69,31 @@ class App extends Component {
         <Header />
         <Sidebar />
         <div className="body-container">
+
         {this.state.dataLoaded === true ? (
-          <Switch>
-            <Route
-              exact
-              path='/'
-              render={props => <Sales {...props} />}
-            />
-            <Route
-              path='/dashboard'
-              render={props => <Dashboard {...props}
+           <Switch>
+          <Route
+            exact
+            path='/'
+            render={props => <Sales {...props}
+                    salesCreate={this.salesCreate}
+                    updateInventoryQuantity={this.updateInventoryQuantity}
+            />}
+          />
+          <Route
+            path='/dashboard'
+            render={props => <Dashboard {...props}
                     inventories={this.state.inventories}
                     orders={this.state.orders}
-                    />}
-            />
-          </Switch>
+                    dataLoaded={this.state.dataLoaded}
+            />}
+          />
+
+        </Switch>
         ) : (
           <p> Loading.... </p>
         )}
         </div>
-
         <Footer />
       </div>
 

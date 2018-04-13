@@ -1,9 +1,8 @@
 \c inventory_db;
 
-INSERT INTO orders(order_quantity, patty_used, cheese_used, tomato_used, lettuce_used, bun_used)
+INSERT INTO orders(patty, cheese, tomato, lettuce, bun)
   VALUES
   (
-    2,
     2,
     2,
     4,
@@ -11,7 +10,6 @@ INSERT INTO orders(order_quantity, patty_used, cheese_used, tomato_used, lettuce
     2
   ),
   (
-    1,
     3,
     2,
     2,
@@ -21,13 +19,11 @@ INSERT INTO orders(order_quantity, patty_used, cheese_used, tomato_used, lettuce
   (
     6,
     6,
-    6,
     12,
     8,
     6
   ),
   (
-    1,
     5,
     3,
     4,

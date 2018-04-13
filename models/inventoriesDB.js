@@ -18,37 +18,34 @@ module.exports = {
     `, id);
   },
 
-  save(inventory) {
-    return db.one(`
-      INSERT INTO inventories (
-        inventory,
-        quantity,
-        cost_per_unit,
-        bulk_price
-      ) VALUES ($1, $2, $3, $4)
-      RETURNING *
-    `, [inventory.inventory, inventory.quantity, inventory.cost_per_unit, inventory.bulk_price]);
-  },
+  // save(inventory) {
+  //   return db.one(`
+  //     INSERT INTO inventories (
+  //       inventory,
+  //       quantity,
+  //       cost_per_unit,
+  //       bulk_price
+  //     ) VALUES ($1, $2, $3, $4)
+  //     RETURNING *
+  //   `, [inventory.inventory, inventory.quantity, inventory.cost_per_unit, inventory.bulk_price]);
+  // },
 
   update(inventory) {
     return db.one(`
       UPDATE inventories
       SET
-        inventory = $/inventory/,
-        quantity = $/quantity/,
-        cost_per_unit = $/cost_per_unit/,
-        bulk_price = $/bulk_price/
+        quantity = $/quantity/
       WHERE inventory_id = $/inventory_id/
       RETURNING *
     `, inventory);
   },
 
-  destroy(id) {
-    return db.none(`
-      DELETE
-        FROM inventories
-      WHERE inventory_id = $1
-    `, id);
-  }
+  // destroy(id) {
+  //   return db.none(`
+  //     DELETE
+  //       FROM inventories
+  //     WHERE inventory_id = $1
+  //   `, id);
+  // }
 
 };
