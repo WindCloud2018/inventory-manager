@@ -69,7 +69,9 @@ class App extends Component {
         <Header />
         <Sidebar />
         <div className="body-container">
-         <Switch>
+
+        {this.state.dataLoaded === true ? (
+           <Switch>
           <Route
             exact
             path='/'
@@ -88,8 +90,10 @@ class App extends Component {
           />
 
         </Switch>
+        ) : (
+          <p> Loading.... </p>
+        )}
         </div>
-
         <Footer />
       </div>
 
