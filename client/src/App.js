@@ -48,7 +48,8 @@ class App extends Component {
     axios.get('/api/units')
       .then(res => {
         this.setState({
-          units: res.data.units
+          units: res.data.units,
+          dataLoaded: true
         })
       })
       .catch(err => console.log(err))
