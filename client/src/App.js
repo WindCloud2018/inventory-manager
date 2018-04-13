@@ -80,7 +80,6 @@ class App extends Component {
             render={props => <Sales {...props} />}
           />
           <Route
-            exact
             path='/dashboard'
             render={props => <Dashboard {...props}
                     inventories={this.state.inventories}

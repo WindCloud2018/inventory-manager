@@ -15,16 +15,11 @@ CREATE TABLE orders (
   order_date TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE units (
-  unit_id SERIAL PRIMARY KEY,
-  unit VARCHAR(64) NOT NULL
-);
-
 CREATE TABLE inventories (
   inventory_id SERIAL PRIMARY KEY,
   inventory VARCHAR(128) NOT NULL,
   inventory_quantity REAL NOT NULL,
   cost_per_unit REAL NOT NULL,
-  unit_id INT NOT NULL REFERENCES units(unit_id),
+  bulk_price REAL NOT NULL,
   low_stock BOOLEAN DEFAULT FALSE
 );
