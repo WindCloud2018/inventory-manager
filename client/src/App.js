@@ -17,22 +17,19 @@ class App extends Component {
     super();
     this.state = {
       orders: null,
-      units: null,
       inventories: null,
       dataLoaded: false
     }
     this.getOrders = this.getOrders.bind(this);
-    this.getUnits = this.getUnits.bind(this);
     this.getInventories = this.getInventories.bind(this);
   }
 
   componentDidMount(){
     this.getOrders();
-    this.getUnits();
     this.getInventories();
   }
 
-//information coming thru
+
   getOrders(){
     axios.get('/api/orders')
       .then(res => {
@@ -43,18 +40,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-//information comes thru.
-  getUnits(){
-    axios.get('/api/units')
-      .then(res => {
-        this.setState({
-          units: res.data.units
-        })
-      })
-      .catch(err => console.log(err))
-  }
 
-//information comes thru
   getInventories(){
     axios.get('/api/inventories')
       .then(res => {
@@ -84,7 +70,6 @@ class App extends Component {
             render={props => <Dashboard {...props}
                     inventories={this.state.inventories}
                     orders={this.state.orders}
-                    units={this.state.units}
                     dataLoaded={this.state.dataLoaded}
                     />}
           />

@@ -7,7 +7,6 @@ const methodOverride = require('method-override');
 const port = process.env.PORT || 5000;
 
 const ordersRoute = require('./routes/ordersRoute');
-const unitsRoute = require('./routes/unitsRoute');
 const inventoriesRoute = require('./routes/inventoriesRoute');
 
 const app = express();
@@ -21,8 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/orders', ordersRoute);
-
-app.use('/api/units', unitsRoute);
 
 app.use('/api/inventories', inventoriesRoute);
 

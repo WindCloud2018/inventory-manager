@@ -5,9 +5,7 @@ module.exports = {
   findAll() {
     return db.many (`
       SELECT *
-      FROM inventories i
-      INNER JOIN units u
-      ON i.unit_id = u.unit_id
+      FROM inventories
       ORDER BY inventory_id
     `);
   },
@@ -26,10 +24,10 @@ module.exports = {
         inventory,
         quantity,
         cost_per_unit,
-        unit_id
+        bulk_price
       ) VALUES ($1, $2, $3, $4)
       RETURNING *
-    `, [inventory.inventory, inventory.quantity, inventory.cost_per_unit, inventory.unit_id]);
+    `, [inventory.inventory, inventory.quantity, inventory.cost_per_unit, inventory.bulk_price]);
   },
 
   update(inventory) {
@@ -39,7 +37,7 @@ module.exports = {
         inventory = $/inventory/,
         quantity = $/quantity/,
         cost_per_unit = $/cost_per_unit/,
-        unit_id = $/unit_id/
+        bulk_price = $/bulk_price/
       WHERE inventory_id = $/inventory_id/
       RETURNING *
     `, inventory);
