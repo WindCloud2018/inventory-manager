@@ -6,12 +6,11 @@ DROP TABLE IF EXISTS inventories;
 
 CREATE TABLE orders (
   order_id SERIAL PRIMARY KEY,
-  order_quantity INT NOT NULL,
-  patty_used INT NOT NULL,
-  cheese_used INT NOT NULL,
-  tomato_used INT NOT NULL,
-  lettuce_used INT NOT NULL,
-  bun_used INT NOT NULL,
+  patty INT NOT NULL,
+  cheese INT NOT NULL,
+  tomato INT NOT NULL,
+  lettuce INT NOT NULL,
+  bun INT NOT NULL,
   order_date TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

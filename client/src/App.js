@@ -22,6 +22,8 @@ class App extends Component {
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
+    this.salesCreate = this.salesCreate.bind(this);
+    this.updateInventoryQuantity = this.updateInventoryQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -52,6 +54,14 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  salesCreate(data) {
+    console.log(data);
+  }
+
+  updateInventoryQuantity(data) {
+    console.log(data);
+  }
+
 
   render() {
     return (
@@ -63,7 +73,10 @@ class App extends Component {
           <Route
             exact
             path='/'
-            render={props => <Sales {...props} />}
+            render={props => <Sales {...props}
+                    salesCreate={this.salesCreate}
+                    updateInventoryQuantity={this.updateInventoryQuantity}
+            />}
           />
           <Route
             path='/dashboard'
@@ -71,7 +84,7 @@ class App extends Component {
                     inventories={this.state.inventories}
                     orders={this.state.orders}
                     dataLoaded={this.state.dataLoaded}
-                    />}
+            />}
           />
 
         </Switch>
