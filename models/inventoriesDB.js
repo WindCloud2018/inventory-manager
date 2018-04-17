@@ -34,7 +34,7 @@ module.exports = {
     return db.one(`
       UPDATE inventories
       SET
-        quantity = $/quantity/
+        inventory_quantity = $/inventory_quantity/
       WHERE inventory_id = $/inventory_id/
       RETURNING *
     `, inventory);

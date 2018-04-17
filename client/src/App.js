@@ -23,7 +23,6 @@ class App extends Component {
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
-    this.updateInventoryQuantity = this.updateInventoryQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -56,13 +55,26 @@ class App extends Component {
 
   salesCreate(event, data) {
     event.preventDefault();
+
+    // create new order
     axios.post('/api/orders', data)
-  }
 
-  updateInventoryQuantity(data) {
-    console.log(data);
-  }
+    // update current inventory quantity
+    const rootUrl = window.location.origin;
+    this.state.inventories.forEach((inventory) => {
+      const pathUrl = `/api/inventories/${inventory.inventory_id}`;
+      const newUrl = rootUrl.concat(pathUrl);
+      const inventory_name = inventory.inventory.toLowerCase()
+      const inventory_quantity = inventory.inventory_quantity - data[inventory_name]
+      const new_inventory = {
+        inventory_id: inventory.inventory_id,
+        inventory_quantity: inventory_quantity
+      }
+      axios.put(newUrl, new_inventory)
+    })
 
+    this.getInventories();
+  }
 
   render() {
     return (
@@ -78,7 +90,7 @@ class App extends Component {
             path='/'
             render={props => <Sales {...props}
                     salesCreate={this.salesCreate}
-                    updateInventoryQuantity={this.updateInventoryQuantity}
+
             />}
           />
           <Route
