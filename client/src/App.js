@@ -54,8 +54,34 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
-  salesCreate(data) {
+  salesCreate(event, data) {
+    event.preventDefault();
     console.log(data);
+    axios({
+      method: 'post',
+      url: '/api/orders',
+      data: {
+        patty: data.patty,
+        cheese: data.cheese,
+        tomato: data.tomato,
+        lettuce: data.lettuce,
+        bun: data.bun
+      }
+    })
+
+    // //tesing out fetch call, works
+    // fetch('/api/orders', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    // .then(res => res.json())
+    // .then(res => {
+    //   this.getOrders();
+    // });
+
   }
 
   updateInventoryQuantity(data) {

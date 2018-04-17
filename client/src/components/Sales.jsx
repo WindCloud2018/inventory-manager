@@ -22,7 +22,6 @@ class Sales extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.checkFills = this.checkFills.bind(this);
   }
 
   componentDidMount() {
@@ -51,22 +50,10 @@ class Sales extends Component {
     });
   }
 
-  checkFills() {
-    if (
-      this.state.description !== '' &&
-      this.state.amount !== '' &&
-      this.state.expense_date !== ''
-      ) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   handleSubmit(e) {
     e.preventDefault();
-    this.props.salesCreate(this.state);
-    this.props.updateInventoryQuantity()
+    this.props.salesCreate(e, this.state);
+    this.props.updateInventoryQuantity(e, this.state);
   }
 
   render() {
