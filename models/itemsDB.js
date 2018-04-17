@@ -5,7 +5,7 @@ module.exports = {
     return db.many(`
       SELECT *
       FROM items
-      ORDER by items_id ASC
+      ORDER by item_id ASC
     `);
   },
 

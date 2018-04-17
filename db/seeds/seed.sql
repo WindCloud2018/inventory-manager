@@ -22,6 +22,9 @@ INSERT INTO orders(order_date)
   VALUES
   (
     '2018-04-16'
+  ),
+  (
+    '2018-03-16'
   );
 
 INSERT INTO used_items(item_id, order_id, used_quantity)
@@ -49,6 +52,31 @@ INSERT INTO used_items(item_id, order_id, used_quantity)
   (
     5,
     1,
+    1
+  ),
+  (
+    1,
+    2,
+    1
+  ),
+  (
+    2,
+    2,
+    2
+  ),
+  (
+    3,
+    2,
+    3
+  ),
+  (
+    4,
+    2,
+    2
+  ),
+  (
+    5,
+    2,
     1
   );
 
