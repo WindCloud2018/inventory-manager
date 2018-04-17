@@ -32,6 +32,8 @@ class App extends Component {
 
 
   getOrders(){
+
+    // get order data and save to state
     axios.get('/api/orders')
       .then(res => {
         this.setState({
@@ -43,6 +45,8 @@ class App extends Component {
 
 
   getInventories(){
+
+    // get inventory data and save to state
     axios.get('/api/inventories')
       .then(res => {
         this.setState({
@@ -62,17 +66,26 @@ class App extends Component {
     // update current inventory quantity
     const rootUrl = window.location.origin;
     this.state.inventories.forEach((inventory) => {
+
+      // find url for PUT using inventory_id in each loop
       const pathUrl = `/api/inventories/${inventory.inventory_id}`;
       const newUrl = rootUrl.concat(pathUrl);
+
+      // get inventory_name and turn into lowercase
       const inventory_name = inventory.inventory.toLowerCase()
-      const inventory_quantity = inventory.inventory_quantity - data[inventory_name]
+
+      // find new inventory quantity by subtract current inventory by sales quantity
+      const new_inventory_quantity = inventory.inventory_quantity - data[inventory_name]
+
+      // data to pass into server end
       const new_inventory = {
         inventory_id: inventory.inventory_id,
-        inventory_quantity: inventory_quantity
+        inventory_quantity: new_inventory_quantity
       }
       axios.put(newUrl, new_inventory)
     })
 
+    // get new inventory data and save to state
     this.getInventories();
   }
 

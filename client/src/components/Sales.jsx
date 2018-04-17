@@ -60,7 +60,7 @@ class Sales extends Component {
             <Input
               type="select"
               name={order_field}
-              id={order_field}
+              id={i}
               value={this.state.order_field}
               onChange={this.handleChange}
             >
@@ -69,7 +69,7 @@ class Sales extends Component {
               <option>3</option>
               <option>4</option>
               <option>5</option>
-              <option>6</option>
+              <option value='0'>None</option>
             </Input>
           </FormGroup>
         ))}
