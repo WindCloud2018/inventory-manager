@@ -5,7 +5,9 @@ module.exports = {
   findAll() {
     return db.many (`
       SELECT *
-      FROM inventories
+      FROM inventories inv
+      INNER JOIN items i
+      ON inv.item_id = i.item_id
       ORDER BY inventory_id
     `);
   },
@@ -18,17 +20,15 @@ module.exports = {
     `, id);
   },
 
-  // save(inventory) {
-  //   return db.one(`
-  //     INSERT INTO inventories (
-  //       inventory,
-  //       quantity,
-  //       cost_per_unit,
-  //       bulk_price
-  //     ) VALUES ($1, $2, $3, $4)
-  //     RETURNING *
-  //   `, [inventory.inventory, inventory.quantity, inventory.cost_per_unit, inventory.bulk_price]);
-  // },
+  save(inventory) {
+    return db.one(`
+      INSERT INTO inventories (
+        inventory_quantity,
+        item_id,
+      ) VALUES ($1, $2)
+      RETURNING *
+    `, [inventory.quantity, item_id]);
+  },
 
   update(inventory) {
     return db.one(`
@@ -40,12 +40,12 @@ module.exports = {
     `, inventory);
   },
 
-  // destroy(id) {
-  //   return db.none(`
-  //     DELETE
-  //       FROM inventories
-  //     WHERE inventory_id = $1
-  //   `, id);
-  // }
+  destroy(id) {
+    return db.none(`
+      DELETE
+        FROM inventories
+      WHERE inventory_id = $1
+    `, id);
+  }
 
 };
