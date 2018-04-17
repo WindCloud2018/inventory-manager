@@ -21,15 +21,14 @@ module.exports = {
   save(order) {
     return db.one(`
       INSERT INTO orders (
-        order_quantity,
-        patty_used,
-        cheese_used,
-        tomato_used,
-        lettuce_used,
-        bun_used
-      ) VALUES ($1, $2, $3, $4, $5, $6)
+        patty,
+        cheese,
+        tomato,
+        lettuce,
+        bun
+      ) VALUES ($1, $2, $3, $4, $5)
       RETURNING *
-    `, [order.order_quantity, order.patty_used, order.cheese_used, order.tomato_used, order.lettuce_used, order.bun_used]);
+    `, [order.patty, order.cheese, order.tomato, order.lettuce, order.bun]);
   },
 
   update(order) {

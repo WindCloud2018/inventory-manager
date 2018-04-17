@@ -26,11 +26,11 @@ module.exports = {
   orderCreate(req, res, next) {
     ordersDB.save({
       order_quantity: req.body.order_quantity,
-      patty_used: req.body.patty_used,
-      cheese_used: req.body.cheese_used,
-      tomato_used: req.body.tomato_used,
-      lettuce_used: req.body.lettuce_used,
-      bun_used: req.body.bun_used
+      patty: req.body.patty,
+      cheese: req.body.cheese,
+      tomato: req.body.tomato,
+      lettuce: req.body.lettuce,
+      bun: req.body.bun
     })
     .then((order) => {
       res.json({

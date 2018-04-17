@@ -26,7 +26,6 @@ class App extends Component {
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
-    this.updateInventoryQuantity = this.updateInventoryQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -37,6 +36,8 @@ class App extends Component {
 
 
   getOrders(){
+
+    // get order data and save to state
     axios.get('/api/orders')
       .then(res => {
         this.setState({
@@ -58,6 +59,8 @@ class App extends Component {
 
 
   getInventories(){
+
+    // get inventory data and save to state
     axios.get('/api/inventories')
       .then(res => {
         this.setState({
@@ -68,14 +71,37 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
-  salesCreate(data) {
-    console.log(data);
-  }
+  salesCreate(event, data) {
+    event.preventDefault();
 
-  updateInventoryQuantity(data) {
-    console.log(data);
-  }
+    // create new order
+    axios.post('/api/orders', data)
 
+    // update current inventory quantity
+    const rootUrl = window.location.origin;
+    this.state.inventories.forEach((inventory) => {
+
+      // find url for PUT using inventory_id in each loop
+      const pathUrl = `/api/inventories/${inventory.inventory_id}`;
+      const newUrl = rootUrl.concat(pathUrl);
+
+      // get inventory_name and turn into lowercase
+      const inventory_name = inventory.inventory.toLowerCase()
+
+      // find new inventory quantity by subtract current inventory by sales quantity
+      const new_inventory_quantity = inventory.inventory_quantity - data[inventory_name]
+
+      // data to pass into server end
+      const new_inventory = {
+        inventory_id: inventory.inventory_id,
+        inventory_quantity: new_inventory_quantity
+      }
+      axios.put(newUrl, new_inventory)
+    })
+
+    // get new inventory data and save to state
+    this.getInventories();
+  }
 
   render() {
     return (
@@ -91,7 +117,7 @@ class App extends Component {
             path='/'
             render={props => <Sales {...props}
                     salesCreate={this.salesCreate}
-                    updateInventoryQuantity={this.updateInventoryQuantity}
+
             />}
           />
           <Route
