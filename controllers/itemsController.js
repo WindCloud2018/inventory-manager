@@ -17,7 +17,7 @@ module.exports = {
     itemsDB.findById(req.params.id)
       .then((item) => {
         res.json({
-          message: "Found one item"
+          message: "Found one item",
           item
         })
       })
