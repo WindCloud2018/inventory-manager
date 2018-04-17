@@ -4,38 +4,43 @@ module.exports = {
 
   findAll() {
     return db.many (`
-      SELECT *
-      FROM orders
-      ORDER BY order_id ASC
+      SELECT
+        *
+      FROM orders o
+      INNER JOIN used_items u
+      ON o.order_id = u.order_id
+      INNER JOIN items i
+      ON u.item_id = i.item_id
+      ORDER BY order_date DESC
     `);
   },
 
   findById(id) {
     return db.one(`
       SELECT *
-      FROM orders
+      FROM orders o
+      INNER JOIN used_items u
+      ON o.order_id = u.order_id
+      INNER JOIN items i
+      ON u.item_id = i.item_id
       WHERE order_id = $1
     `, id);
   },
 
   save(order) {
     return db.one(`
-      INSERT INTO orders (
-        patty,
-        cheese,
-        tomato,
-        lettuce,
-        bun
-      ) VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO orders
+        order_date
+       VALUES $1
       RETURNING *
-    `, [order.patty, order.cheese, order.tomato, order.lettuce, order.bun]);
+    `, [order.order_date]);
   },
 
   update(order) {
     return db.one(`
       UPDATE orders
       SET
-        order = $/order/
+        order_date = $/order_date/
       WHERE order_id = $/order_id/
       RETURNING *
     `, order);
