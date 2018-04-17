@@ -1,36 +1,5 @@
 \c inventory_db;
 
-INSERT INTO orders(patty, cheese, tomato, lettuce, bun)
-  VALUES
-  (
-    2,
-    2,
-    4,
-    2,
-    2
-  ),
-  (
-    3,
-    2,
-    2,
-    1,
-    1
-  ),
-  (
-    6,
-    6,
-    12,
-    8,
-    6
-  ),
-  (
-    5,
-    3,
-    4,
-    2,
-    1
-  );
-
 INSERT INTO items(item)
 VALUES
 (
@@ -49,30 +18,59 @@ VALUES
   'Cheese'
 );
 
-INSERT INTO inventories(inventory, inventory_quantity, item_id)
+INSERT INTO orders(order_date)
   VALUES
   (
-    'Bun',
+    '2018-04-16'
+  );
+
+INSERT INTO used_items(item_id, order_id, used_quantity)
+  VALUES
+  (
+    1,
+    1,
+    1
+  ),
+  (
+    2,
+    1,
+    1
+  ),
+  (
+    3,
+    1,
+    1
+  ),
+  (
+    4,
+    1,
+    1
+  ),
+  (
+    5,
+    1,
+    1
+  );
+
+INSERT INTO inventories(inventory_quantity, item_id)
+  VALUES
+  (
     100,
     1
   ),
   (
-    'Patty',
     100,
     2
   ),
   (
-    'Lettuce',
     100,
     3
   ),
   (
-    'Tomato',
     200,
     4
   ),
   (
-    'Cheese',
     200,
     5
   );
@@ -82,26 +80,34 @@ INSERT INTO inventory_costs(inventory_quantity, cost_per_unit, item_id)
 VALUES
 (
   100,
-  105,
+  1.05,
   1
 ),
 (
   100,
-  52,
+  0.52,
   2
 ),
 (
   100,
-  12,
+  0.12,
   3
 ),
 (
   200,
-  14,
+  0.14,
   4
 ),
 (
   200,
-  50,
+  0.50,
   5
 );
+
+
+
+
+
+
+
+

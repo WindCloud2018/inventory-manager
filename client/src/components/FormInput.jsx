@@ -14,10 +14,6 @@ class FormInput extends React.Component {
     }
   }
 
-  handleEditChange(id, ){
-
-  }
-
 
   render(){
 
@@ -49,11 +45,6 @@ class FormInput extends React.Component {
           <FormGroup className="form-text">
             <Label> Cost Per Unit </Label>
             <Input type="integer" name="CostPerUnit" placeholder="$" />
-          </FormGroup>
-
-          <FormGroup className="form-text">
-            <Label> Bulk Price </Label>
-            <Input type="integer" name="Quantity" placeholder="$" />
           </FormGroup>
 
           <Button> Update </Button>

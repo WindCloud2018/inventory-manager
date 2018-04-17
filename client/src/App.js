@@ -18,10 +18,13 @@ class App extends Component {
     this.state = {
       orders: null,
       inventories: null,
-      dataLoaded: false
+      items: null,
+      dataLoaded: false,
+
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
+    this.getItems = this.getItems.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
     this.updateInventoryQuantity = this.updateInventoryQuantity.bind(this);
   }
@@ -29,6 +32,7 @@ class App extends Component {
   componentDidMount(){
     this.getOrders();
     this.getInventories();
+    this.getItems();
   }
 
 
@@ -37,6 +41,16 @@ class App extends Component {
       .then(res => {
         this.setState({
           orders: res.data.orders
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  getItems() {
+    axios.get('/api/items')
+      .then(res => {
+        this.setState({
+          items: res.data.items
         });
       })
       .catch(err => console.log(err));
