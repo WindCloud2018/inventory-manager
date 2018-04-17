@@ -8,6 +8,8 @@ const port = process.env.PORT || 5000;
 
 const ordersRoute = require('./routes/ordersRoute');
 const inventoriesRoute = require('./routes/inventoriesRoute');
+const inventoryCostsRoute = require('./routes/inventoryCostsRoute');
+const itemsRoute = require('./routes/itemsRoute');
 
 const app = express();
 
@@ -22,6 +24,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/orders', ordersRoute);
 
 app.use('/api/inventories', inventoriesRoute);
+
+app.use('/api/inventoryCosts', inventoryCostsRoute);
+
+app.use('/api/items', itemsRoute);
 
 // the "catchall" handeler: for any request that doesn't
 // match one above, send back React's index.html file.
