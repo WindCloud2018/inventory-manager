@@ -4,8 +4,7 @@ module.exports = {
 
   findAll() {
     return db.many (`
-      SELECT
-        *
+      SELECT *
       FROM orders o
       INNER JOIN used_items u
       ON o.order_id = u.order_id
