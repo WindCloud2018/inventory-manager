@@ -4,11 +4,11 @@ const inventoryCostsDB = require('../models/inventoryCostsDB');
 module.exports = {
 
   inventoryCostIndex(req, res, next) {
-    inventory_costsDB.findAll()
-      .then((inventory_costs) => {
+    inventoryCostsDB.findAll()
+      .then((inventoryCosts) => {
         res.status(200).json({
           message: 'Inventory costs data loaded',
-          inventory_costs
+          inventoryCosts
         });
       })
       .catch(err => next(err));

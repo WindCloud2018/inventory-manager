@@ -8,7 +8,7 @@ module.exports = {
       FROM inventory_costs ic
       INNER JOIN items i
       ON ic.item_id = i.item_id
-      ORDER BY inventory_date, inventory_id ASC
+      ORDER BY inventory_date, inventory_cost_id ASC
     `);
   },
 
