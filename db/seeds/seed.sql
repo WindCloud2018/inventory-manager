@@ -1,21 +1,26 @@
 \c inventory_db;
 
-INSERT INTO items(item)
+INSERT INTO items(item, selectable)
 VALUES
 (
-  'Bun'
+  'Bun',
+  FALSE
 ),
 (
-  'Patty'
+  'Patty',
+  TRUE
 ),
 (
-  'Lettuce'
+  'Lettuce',
+  TRUE
 ),
 (
-  'Tomato'
+  'Tomato',
+  TRUE
 ),
 (
-  'Cheese'
+  'Cheese',
+  TRUE
 );
 
 INSERT INTO orders(order_date)

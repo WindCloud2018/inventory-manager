@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS items;
 
 CREATE TABLE items (
   item_id SERIAL PRIMARY KEY,
-  item TEXT NOT NULL
+  item TEXT NOT NULL,
+  selectable BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE orders (
