@@ -19,12 +19,14 @@ class App extends Component {
       orders: null,
       inventories: null,
       items: null,
+      inventory_costs: null,
       dataLoaded: false,
 
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
+    this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
   }
 
@@ -32,11 +34,11 @@ class App extends Component {
     this.getOrders();
     this.getInventories();
     this.getItems();
+    this.getInventoryCosts();
   }
 
 
   getOrders(){
-
     // get order data and save to state
     axios.get('/api/orders')
       .then(res => {
@@ -57,19 +59,27 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-
   getInventories(){
-
     // get inventory data and save to state
     axios.get('/api/inventories')
       .then(res => {
         this.setState({
-          inventories: res.data.inventories,
-          dataLoaded: true
+          inventories: res.data.inventories
         })
       })
       .catch(err => console.log(err))
   }
+
+  getInventoryCosts() {
+    axios.get('/api/inventory_costs')
+      .then(res => {
+        this.setState({
+          inventory_costs: res.data.inventory_costs,
+          dataLoaded: true
+        })
+      })
+  }
+
 
   salesCreate(event, data) {
     event.preventDefault();
@@ -125,6 +135,8 @@ class App extends Component {
             render={props => <Dashboard {...props}
                     inventories={this.state.inventories}
                     orders={this.state.orders}
+                    inventory_costs={this.state.inventory_costs}
+                    items={this.state.items}
                     dataLoaded={this.state.dataLoaded}
             />}
           />

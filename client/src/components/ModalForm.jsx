@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import InventoryForm from './InventoryForm';
 import '../css/ModalForm.css';
 
@@ -11,10 +11,24 @@ const ModalForm = props => {
         toggle={() => {
           props.toggle()
         }}
+        className={props.className}
       >
-      <ModalBody>
-        <InventoryForm {...props} />
-      </ModalBody>
+        <ModalHeader>
+          Add Inventory
+        </ModalHeader>
+
+        <ModalBody>
+          <InventoryForm {...props} />
+        </ModalBody>
+
+        <ModalFooter>
+          <Button color="secondary"
+            onClick={props.handleUpdateCall}>
+            Submit
+          </Button>
+          <Button color="link"
+            onClick={props.toggle}> Cancel </Button>
+        </ModalFooter>
       </Modal>
     </div>
   );

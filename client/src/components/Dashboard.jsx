@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import '../css/Dashboard.css';
 import FormInput from './FormInput';
 import Inventory from './Inventory';
-import ModalForm from './ModalForm';
-
 
 class Dashboard extends Component {
   constructor(props){
@@ -35,6 +33,14 @@ class Dashboard extends Component {
     })
   }
 
+  // handleInventorySubmitCall(event, value){
+  //   event.preventDefault();
+  //   axios.post('/api/expenses')
+  //     .then(res => {
+
+  //     })
+  // }
+
   render(){
     return (
       <div className="dashboard">
@@ -49,6 +55,7 @@ class Dashboard extends Component {
                    quantity={this.state.quantity}
                    cost_per_unit={this.state.cost_per_unit}
                    modal={this.state.modal}
+
         />
 
       </div>

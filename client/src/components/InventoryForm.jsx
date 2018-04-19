@@ -3,47 +3,47 @@ import { Button, Form, FormGroup, Label, Input, Modal, ModalBody, ModalFooter } 
 import '../css/InventoryForm.css';
 
 
-class InventoryForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      inventory_id: '',
-      item_id: '',
-      quantity: '',
-      cost_per_unit: ''
-    }
-    // this.handleChange = this.handleChange.bind(this);
-  }
+const InventoryForm = props => {
 
+  return(
+    <Form>
+      <FormGroup>
+        <Label for="item"> Item </Label>
+        <Input
+          type="select"
+          name="item"
+          placeholder="Item"
+          onChange={(e) => {
+            props.handleUpdateCall(e.target.value)
+          }}
+        >
+          {props.items.map((item, i) => (
+            <option
+              key={item.item_id}
+              value={item.item_id}
+            >
+            {item.item}
+            </option>
+          ))}
+        </Input>
+      </FormGroup>
 
-  render(){
-    return(
-      <Form>
-        <FormGroup>
-          <Label for="item"> Item </Label>
-          <Input
-            type="select"
-            name="item"
-            placeholder="Item"
-            onChange={(e) => {
-              this.props.handleUpdateCall(e.target.value)
-            }}
-          >
-            {this.props.items.map((item, i) => (
-              <option
-                key={item.item_id}
-                value={item.item_id}
-              >
-              {item.item}
-              </option>
-            ))}
-          </Input>
-        </FormGroup>
+      <FormGroup>
+        <Input
+          type="integer"
+          name="quantity"
+          placeholder="Quantity" />
+      </FormGroup>
 
+      <FormGroup>
+        <Input
+          type="integer"
+          step="any"
+          placeholder="cost per unit"/>
+      </FormGroup>
 
-      </Form>
-    );
-  }
+    </Form>
+  );
 }
 
 export default InventoryForm;

@@ -6,30 +6,10 @@ import { Button } from 'reactstrap';
 
 
 const Inventory = props =>{
-  // constructor() {
-  //   super(props);
-  //   this.state={
-  //     inventory_id: '',
-  //     item_id: '',
-  //     quantity: '',
-  //     cost_per_unit: '',
-  //     modal: false
-  //   }
-  // }
-
-  // render() {
-    return(
-    <div>
+  return(
+    <div className='inventory-container'>
+      <ModalForm {...props}/>
       <p> Restaurant Inventory </p>
-
-       <ModalForm {...props}
-                   toggle={props.toggle}
-                   modal={props.modal}
-                   inventory_id={props.inventory_id}
-                   item_id={props.item_id}
-                   quantity={props.quantity}
-                   cost_per_unit={props.cost_per_unit}
-        />
 
       <div className="inventories-container">
         {props.inventories.map((inventory) => {
@@ -55,8 +35,7 @@ const Inventory = props =>{
         })}
       </div>
     </div>
-    );
-  // }
+  );
 }
 
 export default Inventory;

@@ -27,7 +27,7 @@ app.use('/api/useditems', usedItemsRoute);
 
 app.use('/api/inventories', inventoriesRoute);
 
-app.use('/api/inventoryCosts', inventoryCostsRoute);
+app.use('/api/inventory_costs', inventoryCostsRoute);
 
 app.use('/api/items', itemsRoute);
 
