@@ -114,6 +114,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.inventory_costs, "this is inventory costs")
     return (
       <div className="App">
         <Header />
@@ -138,6 +139,7 @@ class App extends Component {
                     inventory_costs={this.state.inventory_costs}
                     items={this.state.items}
                     dataLoaded={this.state.dataLoaded}
+                    getInventories={this.getInventories}
             />}
           />
 

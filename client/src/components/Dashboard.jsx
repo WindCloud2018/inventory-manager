@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../css/Dashboard.css';
-import FormInput from './FormInput';
+import InventoryCosts from './InventoryCosts';
 import Inventory from './Inventory';
+import axios from 'axios';
 
 class Dashboard extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ class Dashboard extends Component {
       item_id: '',
       quantity: '',
       cost_per_unit: '',
+      totalCost: null,
       modal: false
     }
     this.handleUpdateCall = this.handleUpdateCall.bind(this);
@@ -33,22 +35,29 @@ class Dashboard extends Component {
     })
   }
 
-  // handleInventorySubmitCall(event, value){
-  //   event.preventDefault();
-  //   axios.post('/api/expenses')
-  //     .then(res => {
+  handleInventorySubmitCall(event, value){
+    event.preventDefault();
+    axios.post('/api/inventory_costs', value)
+      .then(res => {
 
-  //     })
-  // }
+      })
+  }
+
+  findTotalCost() {
+    this.props.inventory_costs.map((inventory) => {
+
+    })
+  }
 
   render(){
     return (
       <div className="dashboard">
 
-        <FormInput {...this.props}/>
+        <InventoryCosts {...this.props}/>
 
         <Inventory {...this.props}
                    handleUpdateCall={this.handleUpdateCall}
+                   handleInventorySubmitCall={this.handleInventorySubmitCall}
                    toggle={this.toggle}
                    inventory_id={this.state.inventory_id}
                    item_id={this.state.item_id}

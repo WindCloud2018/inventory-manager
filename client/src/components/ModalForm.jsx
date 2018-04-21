@@ -21,14 +21,6 @@ const ModalForm = props => {
           <InventoryForm {...props} />
         </ModalBody>
 
-        <ModalFooter>
-          <Button color="secondary"
-            onClick={props.handleUpdateCall}>
-            Submit
-          </Button>
-          <Button color="link"
-            onClick={props.toggle}> Cancel </Button>
-        </ModalFooter>
       </Modal>
     </div>
   );

@@ -32,16 +32,31 @@ const InventoryForm = props => {
         <Input
           type="integer"
           name="quantity"
-          placeholder="Quantity" />
+          placeholder="Quantity"
+          onChange={(e) => {
+            props.handleUpdateCall(e.target.value)
+          }} />
       </FormGroup>
 
       <FormGroup>
         <Input
           type="integer"
           step="any"
-          placeholder="cost per unit"/>
+          placeholder="cost per unit"
+          onChange={(e) => {
+            props.handleUpdateCall(e.target.value)
+          }} />
       </FormGroup>
 
+    {/* Submit Button in modal form*/}
+      <ModalFooter>
+        <Button color="secondary" onClick={props.handleInventorySubmitCall} >
+        Submit
+        </Button>
+        <Button onClick={props.toggle}>
+        Cancel
+        </Button>
+      </ModalFooter>
     </Form>
   );
 }

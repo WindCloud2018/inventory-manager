@@ -6,9 +6,14 @@ import { Button } from 'reactstrap';
 
 
 const Inventory = props =>{
+
+console.log(props.inventories, 'yoyo this is form inventory')
+
   return(
     <div className='inventory-container'>
+
       <ModalForm {...props}/>
+
       <p> Restaurant Inventory </p>
 
       <div className="inventories-container">
@@ -17,7 +22,7 @@ const Inventory = props =>{
                      className="inventories"
                 >
             <ul className="inventory">
-            <li> Inventory: {inventory.inventory} </li>
+            <li> Inventory: {inventory.item} </li>
             <li> Quantity: {inventory.inventory_quantity} </li>
             <li> Cost Per Unit: {inventory.cost_per_unit} </li>
             <div className="update-icon">
