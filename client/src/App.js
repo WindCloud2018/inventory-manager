@@ -71,7 +71,7 @@ class App extends Component {
   }
 
   getInventoryCosts() {
-    axios.get('/api/inventory_costs')
+    axios.get('/api/inventorycosts')
       .then(res => {
         this.setState({
           inventory_costs: res.data.inventory_costs,
@@ -140,6 +140,8 @@ class App extends Component {
                     items={this.state.items}
                     dataLoaded={this.state.dataLoaded}
                     getInventories={this.getInventories}
+                    getInventoryCosts={this.getInventoryCosts}
+
             />}
           />
 

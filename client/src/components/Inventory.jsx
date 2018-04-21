@@ -7,8 +7,6 @@ import { Button } from 'reactstrap';
 
 const Inventory = props =>{
 
-console.log(props.inventories, 'yoyo this is form inventory')
-
   return(
     <div className='inventory-container'>
 

@@ -9,15 +9,14 @@ const InventoryForm = props => {
     <Form>
       <FormGroup>
         <Label for="item"> Item </Label>
+      {/* OnChange, input-tags name and option-tags value will change state in Dashboard */}
         <Input
           type="select"
-          name="item"
           placeholder="Item"
-          onChange={(e) => {
-            props.handleUpdateCall(e.target.value)
-          }}
+          name="item_id"
+          onChange={props.handleChange}
         >
-          {props.items.map((item, i) => (
+          {props.items.map((item) => (
             <option
               key={item.item_id}
               value={item.item_id}
@@ -29,28 +28,33 @@ const InventoryForm = props => {
       </FormGroup>
 
       <FormGroup>
+       {/* OnChange, input-tags name and option-tags value will change state in Dashboard */}
         <Input
-          type="integer"
-          name="quantity"
+          type="number"
+          name="inventory_quantity"
           placeholder="Quantity"
-          onChange={(e) => {
-            props.handleUpdateCall(e.target.value)
-          }} />
+          onChange={props.handleChange}
+        />
       </FormGroup>
 
       <FormGroup>
+       {/* OnChange, input-tags name and option-tags value will change state in Dashboard */}
         <Input
-          type="integer"
+          type="number"
           step="any"
+          name="cost_per_unit"
           placeholder="cost per unit"
-          onChange={(e) => {
-            props.handleUpdateCall(e.target.value)
-          }} />
+          onChange={props.handleChange}
+        />
       </FormGroup>
 
-    {/* Submit Button in modal form*/}
+    {/* Submit Button in modal form uses handleInventorySubmit method from Dashboard. Method runs axios.post*/}
       <ModalFooter>
-        <Button color="secondary" onClick={props.handleInventorySubmitCall} >
+        <Button color="secondary"
+                onClick={(e) => {
+                e.preventDefault();
+          props.handleInventorySubmit();
+        }}>
         Submit
         </Button>
         <Button onClick={props.toggle}>
