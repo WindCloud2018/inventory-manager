@@ -3,23 +3,23 @@
 INSERT INTO items(item, selectable)
 VALUES
 (
-  'Bun',
+  'bun',
   FALSE
 ),
 (
-  'Patty',
+  'patty',
   TRUE
 ),
 (
-  'Lettuce',
+  'lettuce',
   TRUE
 ),
 (
-  'Tomato',
+  'tomato',
   TRUE
 ),
 (
-  'Cheese',
+  'cheese',
   TRUE
 );
 

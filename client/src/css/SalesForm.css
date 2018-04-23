@@ -1,0 +1,27 @@
+.sales-form-container {
+
+}
+
+.sales-form-block {
+  display: grid;
+  grid-template-columns: auto 300px auto;
+  grid-template-areas:
+    ". sales-form ."
+}
+
+.sales-form {
+  grid-area: sales-form;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 25px;
+  margin-bottom: 15px;
+  border: 0.5px solid black;
+}
+
+.sales-form-left {
+  justify-self: end;
+}
+
+.sales-form-right {
+  justify-self: start;
+}

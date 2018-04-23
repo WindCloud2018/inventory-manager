@@ -6,7 +6,7 @@ import '../css/InventoryForm.css';
 class InventoryForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       inventory_id: '',
       item_id: '',
       quantity: '',

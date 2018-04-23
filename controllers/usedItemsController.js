@@ -24,16 +24,10 @@ module.exports = {
   },
 
   usedItemsCreate(req, res, next) {
-    usedItemsDB.save({
-      usedItems_date: req.body.usedItems_date
-    })
-    .then((usedItem) => {
-      res.json({
-        message: 'New usedItems created',
-        usedItem
-      });
-    })
-    .catch(err => next(err));
+    console.log(req.body)
+    for (let key in req.body) {
+      console.log(key)
+    }
   },
 
   usedItemsUpdate(req, res, next) {

@@ -14,6 +14,14 @@ module.exports = {
     `);
   },
 
+  findLastOrderId() {
+    return db.one(`
+      SELECT *
+      FROM orders
+      ORDER BY order_id DESC LIMIT 1
+    `);
+  },
+
   findById(id) {
     return db.one(`
       SELECT *
@@ -29,8 +37,8 @@ module.exports = {
   save(order) {
     return db.one(`
       INSERT INTO orders
-        order_date
-       VALUES $1
+        (order_date)
+       VALUES ($1)
       RETURNING *
     `, [order.order_date]);
   },
