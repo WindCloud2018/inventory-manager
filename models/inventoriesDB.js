@@ -31,14 +31,17 @@ module.exports = {
   },
 
   update(inventory) {
+    console.log(inventory, 'this is coming from MODELS')
     return db.one(`
       UPDATE inventories
       SET
-        inventory_quantity = $/quantity/
-      WHERE inventory_id = $/id/
+        inventory_quantity = inventory_quantity + $/inventory_quantity/,
+        item_id = $/item_id/
+      WHERE inventory_id = $/item_id/
       RETURNING *
     `, inventory);
   },
+
 
   deductFromSales(inventoryUpdate) {
     return db.any(`
