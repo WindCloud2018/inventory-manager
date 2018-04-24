@@ -21,7 +21,7 @@ class App extends Component {
       items: null,
       inventory_costs: null,
       dataLoaded: false,
-
+      currentDate: null,
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -35,8 +35,28 @@ class App extends Component {
     this.getItems();
     this.getInventories();
     this.getInventoryCosts();
+    this.getCurrentDate();
   }
 
+  getCurrentDate() {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    today = year + '-' + month + '-' + day;
+
+    this.setState({
+      currentDate: today
+    })
+  }
 
   getOrders(){
     // get order data and save to state
@@ -85,31 +105,6 @@ class App extends Component {
 
     // create new order
     axios.post('/api/orders', data)
-
-    // update current inventory quantity
-    const rootUrl = window.location.origin;
-    this.state.inventories.forEach((inventory) => {
-
-      // find url for PUT using inventory_id in each loop
-      const pathUrl = `/api/inventories/${inventory.inventory_id}`;
-      const newUrl = rootUrl.concat(pathUrl);
-
-      // get inventory_name and turn into lowercase
-      const inventory_name = inventory.inventory.toLowerCase()
-
-      // find new inventory quantity by subtract current inventory by sales quantity
-      const new_inventory_quantity = inventory.inventory_quantity - data[inventory_name]
-
-      // data to pass into server end
-      const new_inventory = {
-        inventory_id: inventory.inventory_id,
-        inventory_quantity: new_inventory_quantity
-      }
-      axios.put(newUrl, new_inventory)
-    })
-
-    // get new inventory data and save to state
-    this.getInventories();
   }
 
   render() {
@@ -127,6 +122,7 @@ class App extends Component {
             path='/'
             render={props => <Sales {...props}
                     salesCreate={this.salesCreate}
+                    currentDate={this.state.currentDate}
 
             />}
           />
