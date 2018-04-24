@@ -11,10 +11,14 @@ const InventoryCosts = props => {
   return(
     <div>
       <h1> Costs on Inventory </h1>
+
+
+
+
       {props.inventory_costs.map((inventory_cost) => (
         <div className="inventory-report"
              key = {inventory_cost.inventory_cost_id}>
-        <p> {inventory_cost.item}: ${Math.round(inventory_cost.inventory_quantity * inventory_cost.cost_per_unit)} </p>
+        <p> {inventory_cost.item[0].toUpperCase() + inventory_cost.item.slice(1)}: ${(inventory_cost.inventory_quantity * inventory_cost.cost_per_unit).toFixed(2)} </p>
         <p> Quantity: {inventory_cost.inventory_quantity} </p>
         <p> CPU: {inventory_cost.cost_per_unit} </p>
         <p> {inventory_cost.inventory_date.slice(0,10)}</p>
@@ -23,7 +27,8 @@ const InventoryCosts = props => {
 
       <div>
       <h2> Total Expense </h2>
-      <p> Total Expense on Inventory: ${props.totalCost} </p>
+    {/* below math rounds to second decimal place otherwise will get giant float in certain math computations. another way is to use .toFixed(2) sgyrt props.totalCost*/}
+      <p> Total Expense on Inventory: ${Math.round(props.totalCost * 100) / 100} </p>
       </div>
     </div>
   );

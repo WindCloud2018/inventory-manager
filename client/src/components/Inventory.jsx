@@ -27,7 +27,6 @@ const Inventory = props =>{
             <Button
               className="update-button"
               onClick={() => {
-              console.log('clicked toggle')
               props.toggle()
             }}>
             <i className="fas fa-plus-circle fa-3x" > </i>
