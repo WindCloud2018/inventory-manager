@@ -8,6 +8,8 @@ inventoriesRoute.route('/:id')
 
 inventoriesRoute.route('/')
   .get(inventoriesController.inventoryIndex)
+  // // special route to pass in data for multiple PUT method on database
+  // .put(inventoriesController.inventorySalesUpdate)
 
 
 module.exports = inventoriesRoute;

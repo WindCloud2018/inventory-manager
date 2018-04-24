@@ -43,6 +43,14 @@ module.exports = {
   },
 
 
+  deductFromSales(inventoryUpdate) {
+    return db.any(`
+      UPDATE inventories
+      SET inventory_quantity = inventory_quantity - $/used_quantity/
+      WHERE inventory_id = $/item_id/
+    `, inventoryUpdate);
+  },
+
   destroy(id) {
     return db.none(`
       DELETE
