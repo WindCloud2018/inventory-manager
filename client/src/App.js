@@ -19,19 +19,22 @@ class App extends Component {
       orders: null,
       inventories: null,
       items: null,
+      inventory_costs: null,
       dataLoaded: false,
       currentDate: null,
     }
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
+    this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
   }
 
   componentDidMount(){
     this.getOrders();
-    this.getInventories();
     this.getItems();
+    this.getInventories();
+    this.getInventoryCosts();
     this.getCurrentDate();
   }
 
@@ -56,7 +59,6 @@ class App extends Component {
   }
 
   getOrders(){
-
     // get order data and save to state
     axios.get('/api/orders')
       .then(res => {
@@ -77,18 +79,25 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-
-  getInventories(){
-
+  getInventories() {
     // get inventory data and save to state
     axios.get('/api/inventories')
       .then(res => {
         this.setState({
-          inventories: res.data.inventories,
-          dataLoaded: true
+          inventories: res.data.inventories
         })
       })
       .catch(err => console.log(err))
+  }
+
+   getInventoryCosts() {
+    axios.get('/api/inventorycosts')
+      .then(res => {
+        this.setState({
+          inventory_costs: res.data.inventory_costs,
+          dataLoaded: true
+        })
+      })
   }
 
   salesCreate(event, data) {
@@ -99,6 +108,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.inventory_costs, "this is inventory costs")
     return (
       <div className="App">
         <Header />
@@ -121,7 +131,12 @@ class App extends Component {
             render={props => <Dashboard {...props}
                     inventories={this.state.inventories}
                     orders={this.state.orders}
+                    inventory_costs={this.state.inventory_costs}
+                    items={this.state.items}
                     dataLoaded={this.state.dataLoaded}
+                    getInventories={this.getInventories}
+                    getInventoryCosts={this.getInventoryCosts}
+
             />}
           />
 

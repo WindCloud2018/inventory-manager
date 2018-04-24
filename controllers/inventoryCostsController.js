@@ -5,10 +5,10 @@ module.exports = {
 
   inventoryCostIndex(req, res, next) {
     inventoryCostsDB.findAll()
-      .then((inventoryCosts) => {
+      .then((inventory_costs) => {
         res.status(200).json({
           message: 'Inventory costs data loaded',
-          inventoryCosts
+          inventory_costs
         });
       })
       .catch(err => next(err));
@@ -16,10 +16,10 @@ module.exports = {
 
   inventoryCostGetOne(req, res, next) {
     inventoryCostsDB.findById(req.params.id)
-      .then((inventoryCost) => {
+      .then((inventory_cost) => {
         res.json({
           message: 'Found one inventory cost',
-          inventoryCost
+          inventory_cost
         })
       })
       .catch(err => next(err));
@@ -31,10 +31,10 @@ module.exports = {
       cost_per_unit: req.body.cost_per_unit,
       item_id: req.body.item_id
     })
-    .then((inventoryCost) => {
+    .then((inventory_cost) => {
       res.json({
-        message: 'New inventoryCost quantity added',
-        inventoryCost
+        message: 'New inventory cost quantity added',
+        inventory_cost
       });
     })
     .catch(err => next(err));
@@ -42,10 +42,10 @@ module.exports = {
 
   inventoryCostUpdate(req, res, next) {
     inventoryCostsDB.update(req.body)
-      .then((inventoryCost) => {
+      .then((inventory_cost) => {
         res.json({
           message: 'InventoryCost updated',
-          inventoryCost
+          inventory_cost
         });
       })
       .catch(err => next(err));

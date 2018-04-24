@@ -40,6 +40,7 @@ module.exports = {
   // },
 
   inventoryUpdate(req, res, next) {
+    console.log(req.body, 'this is update controller')
     inventoriesDB.update(req.body)
       .then((inventory) => {
         res.json({
