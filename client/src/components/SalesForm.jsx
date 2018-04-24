@@ -20,12 +20,13 @@ class SalesForm extends Component {
   getDefaultItemQuantity() {
     // map through items table and add them to the state with default values.
     this.props.items.map((item) => {
-      this.setState({
-        [item.item]: {
-          id: item.item_id,
-          quantity: '1',
-        },
-      });
+      return (
+        this.setState({
+          [item.item]: {
+            id: item.item_id,
+            quantity: '1',
+          },
+        }));
     });
   }
 

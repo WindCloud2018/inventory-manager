@@ -20,21 +20,75 @@ class App extends Component {
       inventory_costs: null,
       dataLoaded: false,
       currentDate: null,
+      lineChartData: null,
+      barChartData: null,
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
     this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
+    this.getLineChartData = this.getLineChartData.bind(this);
+    this.getBarChartData = this.getBarChartData.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getOrders();
     this.getItems();
     this.getInventories();
     this.getInventoryCosts();
     this.getCurrentDate();
     this.getInventories();
+  }
+
+  componentDidMount() {
+    this.getLineChartData();
+    this.getBarChartData();
+  }
+
+  getLineChartData() {
+    this.setState({
+      lineChartData: {
+        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [
+          {
+            label: 'Annual Sales',
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+          },
+        ],
+      },
+    });
+  }
+
+  getBarChartData() {
+    this.setState({
+      barChartData: {
+        label: 'My First dataset',
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    });
   }
 
   getCurrentDate() {
@@ -152,9 +206,8 @@ class App extends Component {
                 path="/overview"
                 render={props => (<Overview
                   {...props}
-                  currentDate={this.state.currentDate}
-                  items={this.state.items}
-                  orders={this.state.orders}
+                  lineChartData={this.state.lineChartData}
+                  barChartData={this.state.barChartData}
                 />)}
               />
 
