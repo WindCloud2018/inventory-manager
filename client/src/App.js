@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Sales from './components/Sales';
+import Overview from './components/Overview';
 
 class App extends Component {
   // Initialize state
@@ -56,7 +57,7 @@ class App extends Component {
     });
   }
 
-  getOrders(){
+  getOrders() {
     // get order data and save to state
     axios.get('/api/orders')
       .then(res => (
@@ -90,12 +91,12 @@ class App extends Component {
 
   getInventoryCosts() {
     axios.get('/api/inventorycosts')
-      .then(res => {
+      .then((res) => {
         this.setState({
           inventory_costs: res.data.inventory_costs,
-          dataLoaded: true
-        })
-      })
+          dataLoaded: true,
+        });
+      });
   }
 
   // create new order and get that order id
@@ -111,16 +112,16 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.inventory_costs, "this is inventory costs")
+    console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
       <div className="App">
         <Header />
         <Sidebar />
         <div className="body-container">
 
-        {this.state.dataLoaded === true ? (
-           <Switch>
-             <Route
+          {this.state.dataLoaded === true ? (
+            <Switch>
+              <Route
                 exact
                 path="/"
                 render={props => (<Sales
@@ -128,26 +129,39 @@ class App extends Component {
                   salesCreate={this.salesCreate}
                   currentDate={this.state.currentDate}
                   items={this.state.items}
+                  orders={this.state.orders}
                 />)}
               />
               <Route
-                path='/dashboard'
-                render={props => <Dashboard {...props}
-                        inventories={this.state.inventories}
-                        orders={this.state.orders}
-                        inventory_costs={this.state.inventory_costs}
-                        items={this.state.items}
-                        dataLoaded={this.state.dataLoaded}
-                        getInventories={this.getInventories}
-                        getInventoryCosts={this.getInventoryCosts}
+                path="/dashboard"
+                render={props => (<Dashboard
+                  {...props}
+                  inventories={this.state.inventories}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
+                  items={this.state.items}
+                  dataLoaded={this.state.dataLoaded}
+                  getInventories={this.getInventories}
+                  getInventoryCosts={this.getInventoryCosts}
 
-                />}
+                />)}
               />
 
-        </Switch>
-        ) : (
-          <p> Loading.... </p>
-        )}
+              <Route
+                exact
+                path="/overview"
+                render={props => (<Overview
+                  {...props}
+                  currentDate={this.state.currentDate}
+                  items={this.state.items}
+                  orders={this.state.orders}
+                />)}
+              />
+
+            </Switch>
+          ) : (
+            <p> Loading.... </p>
+          )}
 
         </div>
         <Footer />

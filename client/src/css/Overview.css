@@ -1,0 +1,22 @@
+.overview-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "left right"
+    "bottom bottom"
+}
+
+.overview-left {
+  min-height: 400px;
+  grid-area: left;
+}
+
+.overview-right {
+  min-height: 400px;
+  grid-area: right;
+}
+
+.overview-bottom {
+  grid-area: bottom;
+}
