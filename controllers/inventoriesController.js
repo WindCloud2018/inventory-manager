@@ -50,6 +50,18 @@ module.exports = {
       .catch(err => next(err));
   },
 
+  // inventorySalesUpdate(req, res, next) {
+  //   console.log("in inventory sales update controller", req.body)
+  //   inventoriesDB.updateFromSales(req.body)
+  //     .then((inventories) => {
+  //       res.json({
+  //         message: 'Inventories updated',
+  //         inventories
+  //       })
+  //     })
+  //     .catch(err => next(err));
+  // },
+
   // inventoryDestroy(req, res, next) {
   //   inventoriesDB.destroy(req.params.id)
   //   .then(() => {

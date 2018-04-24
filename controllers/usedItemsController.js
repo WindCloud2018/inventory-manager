@@ -1,4 +1,5 @@
 const usedItemsDB = require('../models/usedItemsDB');
+const inventoriesDB = require('../models/inventoriesDB');
 
 module.exports = {
 
@@ -24,9 +25,24 @@ module.exports = {
   },
 
   usedItemsCreate(req, res, next) {
-    console.log(req.body)
+    // iterate through data from client side.
     for (let key in req.body) {
-      console.log(key)
+      const itemId = req.body[key]['id']
+      // if object has itemId and have quantity more than 0, create new row in used_items table.
+      if ((itemId !== undefined) && (req.body[key]['quantity'] > 0)) {
+        const newUsedItemData = {
+          item_id: req.body[key]['id'],
+          order_id: req.body.latestOrderId,
+          used_quantity: req.body[key]['quantity'],
+        }
+        usedItemsDB.save(newUsedItemData)
+          // run second query in same object loop to update inventory quantity from quantity used.
+          .then((newUsedItemData) => {
+            inventoriesDB.deductFromSales(newUsedItemData)
+            .catch(err => next(err));
+          })
+          .catch(err => next(err));
+      };
     }
   },
 

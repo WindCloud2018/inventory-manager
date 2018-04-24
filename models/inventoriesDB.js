@@ -34,10 +34,18 @@ module.exports = {
     return db.one(`
       UPDATE inventories
       SET
-        inventory_quantity = $/inventory_quantity/
-      WHERE inventory_id = $/inventory_id/
+        inventory_quantity = $/quantity/
+      WHERE inventory_id = $/id/
       RETURNING *
     `, inventory);
+  },
+
+  deductFromSales(inventoryUpdate) {
+    return db.any(`
+      UPDATE inventories
+      SET inventory_quantity = inventory_quantity - $/used_quantity/
+      WHERE inventory_id = $/item_id/
+    `, inventoryUpdate);
   },
 
   destroy(id) {

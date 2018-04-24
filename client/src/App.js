@@ -27,9 +27,9 @@ class App extends Component {
 
   componentDidMount() {
     this.getOrders();
-    this.getInventories();
     this.getItems();
     this.getCurrentDate();
+    this.getInventories();
   }
 
   getCurrentDate() {
@@ -90,14 +90,12 @@ class App extends Component {
   processOrder(event, data) {
     event.preventDefault();
     axios.post('/api/orders', data)
-      .then(res => {
-        const dataWithLatestOrderId = Object.assign({
-          data,
-          latestOrderId: res.data.last_order.order_id,
-        })
+      .then((res) => {
+        // add newest order id as new key/value into data
+        data.latestOrderId = res.data.last_order.order_id;
+        axios.post('/api/useditems', data);
+      })
 
-        axios.post('/api/useditems', dataWithLatestOrderId)
-      });
   }
 
   render() {

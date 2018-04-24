@@ -51,3 +51,4 @@ CREATE TABLE inventory_costs (
 
 
 
+
