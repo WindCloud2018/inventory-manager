@@ -43,7 +43,7 @@ class SalesForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.processOrder(e, this.state);
+    this.props.salesCreate(e, this.state);
   }
 
   render() {

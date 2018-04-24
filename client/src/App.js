@@ -23,7 +23,6 @@ class App extends Component {
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
-    this.processOrder = this.processOrder.bind(this);
     this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
   }
@@ -89,11 +88,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-
-  // create new order and get that order id
-  processOrder(event, data) {
-
-   getInventoryCosts() {
+  getInventoryCosts() {
     axios.get('/api/inventorycosts')
       .then(res => {
         this.setState({
@@ -103,6 +98,7 @@ class App extends Component {
       })
   }
 
+  // create new order and get that order id
   salesCreate(event, data) {
     event.preventDefault();
     axios.post('/api/orders', data)
@@ -129,7 +125,7 @@ class App extends Component {
                 path="/"
                 render={props => (<Sales
                   {...props}
-                  processOrder={this.processOrder}
+                  salesCreate={this.salesCreate}
                   currentDate={this.state.currentDate}
                   items={this.state.items}
                 />)}
