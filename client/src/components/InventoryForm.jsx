@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
 import '../css/InventoryForm.css';
 
 
@@ -53,7 +53,7 @@ const InventoryForm = props => {
         <Button color="secondary"
                 onClick={(e) => {
                 e.preventDefault();
-          props.handleInventorySubmit();
+          props.handleCreateAndUpdate();
         }}>
         Submit
         </Button>

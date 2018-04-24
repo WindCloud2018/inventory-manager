@@ -32,8 +32,8 @@ class App extends Component {
 
   componentDidMount(){
     this.getOrders();
-    this.getInventories();
     this.getItems();
+    this.getInventories();
     this.getInventoryCosts();
   }
 
@@ -59,7 +59,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  getInventories(){
+  getInventories() {
     // get inventory data and save to state
     axios.get('/api/inventories')
       .then(res => {
@@ -70,7 +70,7 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
-  getInventoryCosts() {
+   getInventoryCosts() {
     axios.get('/api/inventorycosts')
       .then(res => {
         this.setState({
@@ -79,7 +79,6 @@ class App extends Component {
         })
       })
   }
-
 
   salesCreate(event, data) {
     event.preventDefault();

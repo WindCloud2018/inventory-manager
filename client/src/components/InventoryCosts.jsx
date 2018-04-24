@@ -12,7 +12,8 @@ const InventoryCosts = props => {
     <div>
       <h1> Costs on Inventory </h1>
       {props.inventory_costs.map((inventory_cost) => (
-        <div className="inventory-report">
+        <div className="inventory-report"
+             key = {inventory_cost.inventory_cost_id}>
         <p> {inventory_cost.item}: ${Math.round(inventory_cost.inventory_quantity * inventory_cost.cost_per_unit)} </p>
         <p> Quantity: {inventory_cost.inventory_quantity} </p>
         <p> CPU: {inventory_cost.cost_per_unit} </p>
