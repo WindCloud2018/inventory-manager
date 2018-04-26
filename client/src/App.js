@@ -7,33 +7,100 @@ import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Sales from './components/Sales';
+import Overview from './components/Overview';
 
 class App extends Component {
   // Initialize state
   constructor() {
     super();
     this.state = {
+      monthLables: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       orders: null,
       inventories: null,
       items: null,
       inventory_costs: null,
       dataLoaded: false,
       currentDate: null,
+      lineChartData: null,
+      barChartData: null,
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
     this.getItems = this.getItems.bind(this);
     this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
+    this.getLineChartData = this.getLineChartData.bind(this);
+    this.getBarChartData = this.getBarChartData.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getOrders();
     this.getItems();
     this.getInventories();
     this.getInventoryCosts();
     this.getCurrentDate();
     this.getInventories();
+  }
+
+  componentDidMount() {
+    this.getLineChartData();
+    this.getBarChartData();
+  }
+
+  getLineChartData() {
+    this.setState({
+      lineChartData: {
+        labels: this.state.monthLables,
+        datasets: [
+          {
+            label: 'Current Year Sales',
+            fill: false,
+            lineTension: 0,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 10,
+            data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+          },
+          {
+            label: 'Last Year Sales',
+            lineTension: 0,
+            fill: false,
+            data: [50, 20, 40, 60, 40, 70, 50, 75, 40, 60, 52, 75],
+          },
+        ],
+      },
+    });
+  }
+
+  getBarChartData() {
+    this.setState({
+      barChartData: {
+        labels: this.state.monthLables,
+        datasets: [
+          {
+            label: 'My First dataset',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+            hoverBorderColor: 'rgba(255,99,132,1)',
+            data: [65, 59, 80, 81, 56, 55, 40]
+          }
+        ]
+      },
+    });
   }
 
   getCurrentDate() {
@@ -56,7 +123,7 @@ class App extends Component {
     });
   }
 
-  getOrders(){
+  getOrders() {
     // get order data and save to state
     axios.get('/api/orders')
       .then(res => (
@@ -90,12 +157,12 @@ class App extends Component {
 
   getInventoryCosts() {
     axios.get('/api/inventorycosts')
-      .then(res => {
+      .then((res) => {
         this.setState({
           inventory_costs: res.data.inventory_costs,
-          dataLoaded: true
-        })
-      })
+          dataLoaded: true,
+        });
+      });
   }
 
   // create new order and get that order id
@@ -111,16 +178,16 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.inventory_costs, "this is inventory costs")
+    console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
       <div className="App">
         <Header />
         <Sidebar />
         <div className="body-container">
 
-        {this.state.dataLoaded === true ? (
-           <Switch>
-             <Route
+          {this.state.dataLoaded === true ? (
+            <Switch>
+              <Route
                 exact
                 path="/"
                 render={props => (<Sales
@@ -128,26 +195,38 @@ class App extends Component {
                   salesCreate={this.salesCreate}
                   currentDate={this.state.currentDate}
                   items={this.state.items}
+                  orders={this.state.orders}
                 />)}
               />
               <Route
-                path='/dashboard'
-                render={props => <Dashboard {...props}
-                        inventories={this.state.inventories}
-                        orders={this.state.orders}
-                        inventory_costs={this.state.inventory_costs}
-                        items={this.state.items}
-                        dataLoaded={this.state.dataLoaded}
-                        getInventories={this.getInventories}
-                        getInventoryCosts={this.getInventoryCosts}
+                path="/dashboard"
+                render={props => (<Dashboard
+                  {...props}
+                  inventories={this.state.inventories}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
+                  items={this.state.items}
+                  dataLoaded={this.state.dataLoaded}
+                  getInventories={this.getInventories}
+                  getInventoryCosts={this.getInventoryCosts}
 
-                />}
+                />)}
               />
 
-        </Switch>
-        ) : (
-          <p> Loading.... </p>
-        )}
+              <Route
+                exact
+                path="/overview"
+                render={props => (<Overview
+                  {...props}
+                  lineChartData={this.state.lineChartData}
+                  barChartData={this.state.barChartData}
+                />)}
+              />
+
+            </Switch>
+          ) : (
+            <p> Loading.... </p>
+          )}
 
         </div>
         <Footer />

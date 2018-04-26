@@ -3,21 +3,24 @@ import '../css/Sidebar.css';
 import { NavLink } from 'react-router-dom';
 import { Nav, NavItem } from 'reactstrap';
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   return (
     <div className="sidebar">
-      <h3> This is sidebar </h3>
-      <Nav className="sidenav">
+      <h3> Inventory Management </h3>
+      <Nav className="sidenav" vertical>
         <NavItem className="nav-link">
-          <NavLink to="/"> Sales </NavLink>
+          <NavLink to="/">Sales</NavLink>
         </NavItem>
         <NavItem className="nav-link">
-          <NavLink to="/dashboard">Inventory </NavLink>
+          <NavLink to="/dashboard">Inventory</NavLink>
+        </NavItem>
+        <NavItem className="nav-link">
+          <NavLink to="/overview">Overview</NavLink>
         </NavItem>
       </Nav>
     </div>
   );
-}
+};
 
 
 export default Sidebar;
