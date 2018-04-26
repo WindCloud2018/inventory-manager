@@ -14,7 +14,7 @@ const Inventory = props =>{
 
       <p> Restaurant Inventory </p>
 
-      <div className="inventories-container">
+      {/*<div className="inventories-container">
         {props.inventories.map((inventory) => {
           return<div key={inventory.inventory_id}
                      className="inventories"
@@ -27,7 +27,6 @@ const Inventory = props =>{
             <Button
               className="update-button"
               onClick={() => {
-              console.log('clicked toggle')
               props.toggle()
             }}>
             <i className="fas fa-plus-circle fa-3x" > </i>
@@ -36,7 +35,7 @@ const Inventory = props =>{
             </ul>
           </div>
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

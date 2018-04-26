@@ -21,6 +21,9 @@ class App extends Component {
       inventory_costs: null,
       dataLoaded: false,
       currentDate: null,
+      years: [],
+      months: [],
+      currentYear: null
       lineChartData: null,
       barChartData: null,
     };
@@ -29,6 +32,8 @@ class App extends Component {
     this.getItems = this.getItems.bind(this);
     this.getInventoryCosts = this.getInventoryCosts.bind(this);
     this.salesCreate = this.salesCreate.bind(this);
+    this.getYears = this.getYears.bind(this);
+    this.findKeyInObject = this.findKeyInObject.bind(this);
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
   }
@@ -165,6 +170,38 @@ class App extends Component {
       });
   }
 
+  checkIfExist(array, value){
+    return array.some((element) => {
+      return element === value
+    })
+  }
+
+  findKeyInObject(date){
+    console.log(date, 'this is dates findKeyInObject')
+    for (let key in date) {
+      if (key.search('_date') !== -1) {
+
+        return key
+      }
+    }
+  }
+
+  getYears(dates) {
+    let year_array = [];
+    dates.forEach((date) => {
+      let dateKey = this.findKeyInObject(date);
+      let curr_year = date[dateKey].slice(0,4);
+      if (year_array.length === 0) {
+        year_array.push(curr_year);
+      } else if (!this.checkIfExist(year_array, curr_year)) {
+        year_array.push(curr_year)
+      }
+    })
+    this.setState({
+      years: year_array
+    })
+  }
+
   // create new order and get that order id
   salesCreate(event, data) {
     event.preventDefault();
@@ -175,6 +212,12 @@ class App extends Component {
         axios.post('/api/useditems', data);
       })
 
+  }
+
+  handleSelectYearCall(value){
+    this.setState({
+      currentYear: value
+    });
   }
 
   render() {
@@ -199,18 +242,20 @@ class App extends Component {
                 />)}
               />
               <Route
-                path="/dashboard"
-                render={props => (<Dashboard
-                  {...props}
-                  inventories={this.state.inventories}
-                  orders={this.state.orders}
-                  inventory_costs={this.state.inventory_costs}
-                  items={this.state.items}
-                  dataLoaded={this.state.dataLoaded}
-                  getInventories={this.getInventories}
-                  getInventoryCosts={this.getInventoryCosts}
+                path='/dashboard'
+                render={props => <Dashboard {...props}
+                        inventories={this.state.inventories}
+                        orders={this.state.orders}
+                        inventory_costs={this.state.inventory_costs}
+                        items={this.state.items}
+                        dataLoaded={this.state.dataLoaded}
+                        getInventories={this.getInventories}
+                        getInventoryCosts={this.getInventoryCosts}
+                        getYears={this.getYears}
+                        currentYear={this.state.currentYear}
+                        years={this.state.years}
 
-                />)}
+                />}
               />
 
               <Route

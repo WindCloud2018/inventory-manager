@@ -21,7 +21,7 @@ const InventoryForm = props => {
               key={item.item_id}
               value={item.item_id}
             >
-            {item.item}
+            {item.item[0].toUpperCase() + item.item.slice(1)}
             </option>
           ))}
         </Input>
@@ -53,7 +53,8 @@ const InventoryForm = props => {
         <Button color="secondary"
                 onClick={(e) => {
                 e.preventDefault();
-          props.handleCreateAndUpdate();
+                props.toggle();
+                props.handleCreateAndUpdate();
         }}>
         Submit
         </Button>
