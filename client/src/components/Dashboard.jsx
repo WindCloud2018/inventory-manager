@@ -28,6 +28,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.findTotalItemCost();
+    this.props.getYears(this.props.inventory_costs);
   }
 
 //ask when to use componentWillReceiveProps() vs componentWillUpate
@@ -124,6 +125,21 @@ class Dashboard extends Component {
   render(){
     return (
       <div className="dashboard">
+
+      <div className="year-select-container">
+        <form>
+          <select value={this.props.currentYear}
+                  onChange={(e) => {
+                  this.props.handleSelectYearCall(e.target.value)}}>
+          {this.props.years.map((year, i) => {
+            return <option  key={i}
+                            value={year}>
+            {year}
+            </option>
+          })}
+          </select>
+        </form>
+      </div>
 
       <div>
           <p>Months Go Here</p>
