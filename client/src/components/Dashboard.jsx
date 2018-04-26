@@ -125,6 +125,13 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
 
+      <div>
+          <p>Months Go Here</p>
+          <form>
+
+          </form>
+      </div>
+
         <InventoryCosts {...this.props}
                         totalCost={this.state.totalCost}
 

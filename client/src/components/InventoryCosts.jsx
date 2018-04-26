@@ -12,9 +12,6 @@ const InventoryCosts = props => {
     <div>
       <h1> Costs on Inventory </h1>
 
-
-
-
       {props.inventory_costs.map((inventory_cost) => (
         <div className="inventory-report"
              key = {inventory_cost.inventory_cost_id}>
