@@ -1,3 +1,17 @@
 .footer {
-  background-color: steelblue;
+  padding: 20px 0px;
+  background-color: #b5ffd5;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.footer-top {
+  margin-bottom: 10px;
+}
+
+.footer-top a {
+  color: #413E3E;
+}
+
+.footer-right {
 }

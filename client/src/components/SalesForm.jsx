@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../css/SalesForm.css';
 
 
@@ -20,12 +20,13 @@ class SalesForm extends Component {
   getDefaultItemQuantity() {
     // map through items table and add them to the state with default values.
     this.props.items.map((item) => {
-      this.setState({
-        [item.item]: {
-          id: item.item_id,
-          quantity: '1',
-        },
-      });
+      return (
+        this.setState({
+          [item.item]: {
+            id: item.item_id,
+            quantity: '1',
+          },
+        }));
     });
   }
 
@@ -54,7 +55,7 @@ class SalesForm extends Component {
             key={item.item_id}
             className="sales-form-block"
           >
-          {/* map through items table and check for selectable column, show only if true */}
+            {/* map through items table and check for selectable column, show only if true */}
             {item.selectable ? (
               <div className="sales-form">
                 <Label
