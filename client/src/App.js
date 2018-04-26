@@ -23,7 +23,7 @@ class App extends Component {
       currentDate: null,
       years: [],
       months: [],
-      currentYear: null
+      currentYear: null,
       lineChartData: null,
       barChartData: null,
     };
