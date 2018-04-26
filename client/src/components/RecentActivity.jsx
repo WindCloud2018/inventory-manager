@@ -5,7 +5,7 @@ import '../css/RecentActivity.css';
 const RecentActivity = (props) => {
   return (
     <div>
-      RecentActivity
+      Recent Activity
     </div>
   );
 };

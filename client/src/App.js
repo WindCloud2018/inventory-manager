@@ -14,6 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      monthLables: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       orders: null,
       inventories: null,
       items: null,
@@ -49,12 +50,12 @@ class App extends Component {
   getLineChartData() {
     this.setState({
       lineChartData: {
-        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        labels: this.state.monthLables,
         datasets: [
           {
-            label: 'Annual Sales',
-            fill: true,
-            lineTension: 0.1,
+            label: 'Current Year Sales',
+            fill: false,
+            lineTension: 0,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',
             borderCapStyle: 'butt',
@@ -68,9 +69,15 @@ class App extends Component {
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
             pointHoverBorderColor: 'rgba(220,220,220,1)',
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 3,
             pointHitRadius: 10,
             data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+          },
+          {
+            label: 'Last Year Sales',
+            lineTension: 0,
+            fill: false,
+            data: [50, 20, 40, 60, 40, 70, 50, 75, 40, 60, 52, 75],
           },
         ],
       },
@@ -80,13 +87,18 @@ class App extends Component {
   getBarChartData() {
     this.setState({
       barChartData: {
-        label: 'My First dataset',
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        labels: this.state.monthLables,
+        datasets: [
+          {
+            label: 'My First dataset',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+            hoverBorderColor: 'rgba(255,99,132,1)',
+            data: [65, 59, 80, 81, 56, 55, 40]
+          }
+        ]
       },
     });
   }

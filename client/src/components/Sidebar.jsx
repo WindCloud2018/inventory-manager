@@ -3,11 +3,11 @@ import '../css/Sidebar.css';
 import { NavLink } from 'react-router-dom';
 import { Nav, NavItem } from 'reactstrap';
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   return (
     <div className="sidebar">
-      <h3> This is sidebar </h3>
-      <Nav className="sidenav">
+      <h3> Inventory Management </h3>
+      <Nav className="sidenav" vertical>
         <NavItem className="nav-link">
           <NavLink to="/">Sales</NavLink>
         </NavItem>
@@ -20,7 +20,7 @@ const Sidebar = props => {
       </Nav>
     </div>
   );
-}
+};
 
 
 export default Sidebar;

@@ -11,8 +11,6 @@ const LineChart = (props) => {
           responsive: true,
           pointDotRadius: 10,
           bezierCurve: false,
-          scaleShowVerticalLines: false,
-          scaleGridLineColor: 'gray',
           animationSteps : 50,
 
         }}

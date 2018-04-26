@@ -55,7 +55,7 @@ class SalesForm extends Component {
             key={item.item_id}
             className="sales-form-block"
           >
-          {/* map through items table and check for selectable column, show only if true */}
+            {/* map through items table and check for selectable column, show only if true */}
             {item.selectable ? (
               <div className="sales-form">
                 <Label
