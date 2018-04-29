@@ -3,13 +3,9 @@ const db = require('../db/config');
 module.exports = {
 
   findAll() {
-    return db.many (`
+    return db.many(`
       SELECT *
       FROM orders o
-      INNER JOIN used_items u
-      ON o.order_id = u.order_id
-      INNER JOIN items i
-      ON u.item_id = i.item_id
       ORDER BY order_date DESC
     `);
   },
