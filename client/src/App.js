@@ -22,7 +22,6 @@ class App extends Component {
       dataLoaded: false,
       currentDate: null,
       years: [],
-      months: [],
       currentYear: null,
       lineChartData: null,
       barChartData: null,
@@ -36,6 +35,7 @@ class App extends Component {
     this.findKeyInObject = this.findKeyInObject.bind(this);
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
+    this.handleSelectYearCall = this.handleSelectYearCall.bind(this);
   }
 
   componentWillMount() {
@@ -254,6 +254,7 @@ class App extends Component {
                         getYears={this.getYears}
                         currentYear={this.state.currentYear}
                         years={this.state.years}
+                        handleSelectYearCall={this.handleSelectYearCall}
 
                 />}
               />

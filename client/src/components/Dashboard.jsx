@@ -76,6 +76,7 @@ class Dashboard extends Component {
       const itemTotal = inventory_cost.inventory_quantity * inventory_cost.cost_per_unit;
       sum += itemTotal;
       return sum;
+
     })
     console.log(sum, 'before setting state SUM')
     this.setState({

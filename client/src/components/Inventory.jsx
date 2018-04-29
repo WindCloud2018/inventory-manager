@@ -14,7 +14,7 @@ const Inventory = props =>{
 
       <p> Restaurant Inventory </p>
 
-      {/*<div className="inventories-container">
+      <div className="inventories-container">
         {props.inventories.map((inventory) => {
           return<div key={inventory.inventory_id}
                      className="inventories"
@@ -35,7 +35,7 @@ const Inventory = props =>{
             </ul>
           </div>
         })}
-      </div> */}
+      </div>
     </div>
   );
 }
