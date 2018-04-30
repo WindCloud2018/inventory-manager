@@ -7,7 +7,6 @@ const InventoryCosts = props => {
   console.log(props.inventory_costs,
   'this is inventory costs')
 
-
   return(
     <div>
       <h1> Costs on Inventory </h1>

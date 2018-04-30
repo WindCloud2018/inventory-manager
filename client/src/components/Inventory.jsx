@@ -1,9 +1,7 @@
 import React from 'react';
 import '../css/Inventory.css';
 import ModalForm from './ModalForm';
-import { Button } from 'reactstrap';
-
-
+import { Button, Form, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 const Inventory = props =>{
 

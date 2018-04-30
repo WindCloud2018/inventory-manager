@@ -8,6 +8,8 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Sales from './components/Sales';
 import Overview from './components/Overview';
+import { Button, Form, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import MissingInfoModal from './components/MissingInfoModal';
 
 class App extends Component {
   // Initialize state
@@ -36,6 +38,14 @@ class App extends Component {
       salesYearToView: 1,
       salesModal: false,
       salesStatus: '',
+      //dashboard stuff below
+      item_id: '1',
+      inventory_quantity: '',
+      cost_per_unit: '',
+      totalCost: null,
+      modal: false,
+      missing_info: false,
+      inventoryCostData: {}
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -51,6 +61,14 @@ class App extends Component {
     this.getCurrentYear = this.getCurrentYear.bind(this);
     this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
     this.handleYearsView = this.handleYearsView.bind(this);
+    this.handleInventorySubmit = this.handleInventorySubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleQuantityUpdate = this.handleQuantityUpdate.bind(this);
+    this.handleCreateAndUpdate = this.handleCreateAndUpdate.bind(this);
+    this.findTotalItemCost = this.findTotalItemCost.bind(this);
+    this.checkFilled = this.checkFilled.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.toggleMissing = this.toggleMissing.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +80,6 @@ class App extends Component {
     this.getInventories();
     this.getCurrentMonth();
     this.getCurrentYear();
-
   }
 
 //get current month so we can compare with database month. and render specific month user choses on selector.
@@ -99,6 +116,16 @@ class App extends Component {
     return data;
   }
 
+  getInventoryCostData() {
+    this.setState({
+      inventoryCostData : {
+        inventory_quantity: this.state.inventory_quantity,
+        cost_per_unit: this.state.cost_per_unit,
+
+      }
+    })
+  }
+  
   handleYearsView(e) {
     this.setState({
       salesYearToView: e,
@@ -218,8 +245,24 @@ class App extends Component {
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
-        });
-      });
+        })
+        this.findTotalItemCost();
+      })
+  }
+
+//this method calculates the total cost of inventory. will need to add another method to filter out expenses by month.
+  findTotalItemCost() {
+    let sum = 0;
+    this.state.inventory_costs.map((inventory_cost) => {
+      const itemTotal = inventory_cost.inventory_quantity * inventory_cost.cost_per_unit;
+      sum += itemTotal;
+      return sum;
+
+    })
+    console.log(sum, 'before setting state SUM')
+    this.setState({
+       totalCost: sum
+    });
   }
 
 
@@ -233,8 +276,7 @@ class App extends Component {
 
   /* iterate through a single keyvalue in a collection of objects
   and locate a keyvalue pair with a key that has _date with a .search method. */
-  findKeyInObject(date) {
-    console.log(date, 'this is dates findKeyInObject')
+  findKeyInObject(date){
     for (let key in date) {
       if (key.search('_date') !== -1) {
 
@@ -287,11 +329,95 @@ class App extends Component {
         }
       });
   }
-
-  handleSelectYearCall(value) {
+  
+//used in dashboard year selector
+  handleSelectYearCall(value){
     this.setState({
       currentYear: value
     });
+  }
+
+//used in dashboard month selector
+  handleMonthCall(value) {
+    this.setState({
+      currentMonth: value
+    })
+  }
+
+//toggles inventoryModal in state
+  toggle(){
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+//toggles missingInfo in state
+  toggleMissing() {
+    this.setState({
+      missing_info: !this.state.missing_info
+    });
+  }
+
+  //method passed down to inventory and into inventory form to handle changes to dashboard state.
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+//checkedFilled only active when submit button is pressed. Checking dashboard state whether its state is empty, if not empty then proceed to post in handleSubmit method.
+  checkFilled() {
+    if (
+      this.state.item_id !== '' &&
+      this.state.inventory_quantity !== '' &&
+      this.state.cost_per_unit !== ''
+    ) {
+      console.log('true')
+      return true
+    } else {
+      console.log('false')
+      return false
+    }
+  }
+
+
+//method run both create and update and then find total for inventory expense
+  handleCreateAndUpdate() {
+    this.handleInventorySubmit();
+    this.handleQuantityUpdate();
+  }
+
+
+  //method posts dashboard state into inventory_costs table then refreshes inventoryCosts.
+  handleInventorySubmit(){
+    if (this.checkFilled()) {
+      axios.post('/api/inventorycosts', this.state)
+      .then(res => {
+        this.getInventoryCosts();
+      })
+    } else {
+      this.toggleMissing();
+    }
+  }
+
+  /*method updates the total inventory quantity. even though state has costperunit it wont update inventories database because in models we customized the SET update to only add quantity and item_id*/
+
+  handleQuantityUpdate() {
+    const rootUrl = window.location.origin;
+    const pathUrl = `/api/inventories/${this.state.item_id}`;
+    const newUrl = rootUrl.concat(pathUrl);
+    if (this.checkFilled()) {
+      axios.put(newUrl, this.state)
+      .then(res => {
+        this.getInventories();
+      })
+    } else {
+      this.setState({
+        missing_info: true
+      })
+    }
   }
 
   render() {
@@ -320,22 +446,33 @@ class App extends Component {
                 />)}
               />
               <Route
-                path="/dashboard"
-                render={props => (<Dashboard
-                  {...props}
-                  inventories={this.state.inventories}
-                  orders={this.state.orders}
-                  inventory_costs={this.state.inventory_costs}
-                  items={this.state.items}
-                  dataLoaded={this.state.dataLoaded}
-                  getInventories={this.getInventories}
-                  getInventoryCosts={this.getInventoryCosts}
-                  getYears={this.getYears}
-                  currentYear={this.state.currentYear}
-                  years={this.state.years}
-                  handleSelectYearCall={this.handleSelectYearCall}
+                path='/dashboard'
+                render={props => <Dashboard {...props}
+                        inventories={this.state.inventories}
+                        orders={this.state.orders}
+                        inventory_costs={this.state.inventory_costs}
+                        items={this.state.items}
+                        dataLoaded={this.state.dataLoaded}
+                        getInventories={this.getInventories}
+                        getInventoryCosts={this.getInventoryCosts}
+                        monthLabels={this.state.monthLabels}
+                        currentYear={this.state.currentYear}
+                        years={this.state.years}
+                        totalCost={this.state.totalCost}
+                        modal = {this.state.modal}
+                        missingInfo = {this.state.missing_info}
 
-                />)}
+                        //handle methods
+                        toggle = {this.toggle}
+                        handleInventorySubmit = {this.handleInventorySubmit}
+                        handleChange = {this.handleChange}
+                        handleQuantityUpdate = {this.handleQuantityUpdate}
+                        handleCreateAndUpdate = {this.handleCreateAndUpdate}
+                        findTotalItemCost = {this.findTotalItemCost}
+                        checkFilled = {this.checkFilled}
+                        toggleMissing = {this.toggleMissing}
+                        handleSelectYearCall={this.handleSelectYearCall}
+                />}
               />
 
               <Route
@@ -354,8 +491,10 @@ class App extends Component {
           ) : (
             <p> Loading.... </p>
           )}
-
         </div>
+        <MissingInfoModal missing_info = {this.state.missing_info}
+                          toggleMissing = {this.toggleMissing}
+        />
         <Footer />
       </div>
 
