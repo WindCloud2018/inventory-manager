@@ -22,6 +22,7 @@ class App extends Component {
       dataLoaded: false,
       currentDate: null,
       years: [],
+      currentMonth: null,
       currentYear: null,
       lineChartData: null,
       barChartData: null,
@@ -36,6 +37,8 @@ class App extends Component {
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
     this.handleSelectYearCall = this.handleSelectYearCall.bind(this);
+    this.getCurrentMonth = this.getCurrentMonth.bind(this);
+    this.getCurrentYear = this.getCurrentYear.bind(this);
   }
 
   componentWillMount() {
@@ -45,11 +48,34 @@ class App extends Component {
     this.getInventoryCosts();
     this.getCurrentDate();
     this.getInventories();
+    this.getCurrentMonth();
+    this.getCurrentYear();
   }
 
   componentDidMount() {
     this.getLineChartData();
     this.getBarChartData();
+  }
+
+//get current month so we can compare with database month. and render specific month user choses on selector.
+  getCurrentMonth() {
+    const current = new Date().getMonth();
+    console.log(current, 'this is currentMonth')
+    let newCurrent = current + 1
+    if (newCurrent < 10) {
+      newCurrent = '0' + newCurrent;
+    }
+    this.setState({
+      currentMonth: newCurrent
+    });
+  }
+
+  getCurrentYear(){
+    const currYear = new Date().getFullYear().toString();
+    console.log(currYear, 'this is the current year')
+    this.setState({
+      currentYear: currYear
+    })
   }
 
   getLineChartData() {
