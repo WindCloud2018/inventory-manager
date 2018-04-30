@@ -16,7 +16,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      monthLabels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      monthLables: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      yearColors: [
+        'rgba(93,138,168,1)',
+        'rgba(93,168,123,0.3)',
+        'rgba(168,93,138,0.3)',
+        'rgba(255,128,150,0.3)',
+        'rgba(93,101,168,0.3)',
+      ],
       orders: null,
       inventories: null,
       items: null,
@@ -28,7 +35,7 @@ class App extends Component {
       currentYear: null,
       lineChartData: null,
       barChartData: null,
-      salesYearToView: 2,
+      salesYearToView: 1,
       salesModal: false,
       salesStatus: '',
       //dashboard stuff below
@@ -53,8 +60,7 @@ class App extends Component {
     this.getCurrentMonth = this.getCurrentMonth.bind(this);
     this.getCurrentYear = this.getCurrentYear.bind(this);
     this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
-
-
+    this.handleYearsView = this.handleYearsView.bind(this);
     this.handleInventorySubmit = this.handleInventorySubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleQuantityUpdate = this.handleQuantityUpdate.bind(this);
@@ -65,7 +71,7 @@ class App extends Component {
     this.toggleMissing = this.toggleMissing.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getOrders();
     this.getItems();
     this.getInventories();
@@ -74,12 +80,6 @@ class App extends Component {
     this.getInventories();
     this.getCurrentMonth();
     this.getCurrentYear();
-  }
-
-  componentDidMount() {
-    this.getLineChartData();
-    this.getBarChartData();
-    console.log(this.state.inventory_costs, 'this is inventory costs bro')
   }
 
 //get current month so we can compare with database month. and render specific month user choses on selector.
@@ -103,6 +103,19 @@ class App extends Component {
     })
   }
 
+  lineChartDataHelper(year) {
+    // create array with length of 12, fill each with 0
+    const data = Array(12).fill(0);
+    this.state.orders.map((order, i) => {
+      const orderYear = order.order_date.split('-')[0]
+      const orderMonth = Number(order.order_date.split('-')[1])
+      if (orderYear === year) {
+        data[orderMonth-1] += 1
+      }
+    })
+    return data;
+  }
+
   getInventoryCostData() {
     this.setState({
       inventoryCostData : {
@@ -112,34 +125,41 @@ class App extends Component {
       }
     })
   }
+  
+  handleYearsView(e) {
+    this.setState({
+      salesYearToView: e,
+    }, () => {
+      this.getLineChartData();
+    });
+  }
 
   getLineChartData() {
-    // choose how many year back you want to view
-    this.state.salesYearToView
+    const yearsView = Number(this.state.salesYearToView);
+    const yearColors = this.state.yearColors;
+    const datasets = [];
 
+    [...Array(yearsView)].map((e, i) => {
+      if (this.state.years[i] === undefined) {
+        return
+      } else {
+        datasets.push({
+          label: this.state.years[i],
+          fill: false,
+          lineTension: 0,
+          borderColor: yearColors[i],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointRadius: 3,
+          pointHitRadius: 10,
+          data: this.lineChartDataHelper(this.state.years[i]),
+        });
+      }
+    });
     this.setState({
       lineChartData: {
         labels: this.state.monthLables,
-        datasets: [
-          {
-            label: 'Current Year Sales',
-            fill: false,
-            lineTension: 0,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointRadius: 3,
-            pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
-          },
-          {
-            label: 'Last Year Sales',
-            lineTension: 0,
-            fill: false,
-            data: [50, 20, 40, 60, 40, 70, 50, 75, 40, 60, 52, 75],
-          },
-        ],
+        datasets,
       },
     });
   }
@@ -218,7 +238,10 @@ class App extends Component {
   getInventoryCosts() {
     axios.get('/api/inventorycosts')
       .then((res) => {
+        // run filter through respond data to find all years.
         this.getYears(res.data.inventory_costs);
+        this.getLineChartData();
+        this.getBarChartData();
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
@@ -243,14 +266,16 @@ class App extends Component {
   }
 
 
-//take in two parameters an array and a value and return with a .some method where if element equals value we return.
-  checkIfExist(array, value){
+  /* take in two parameters an array and a value
+  and return with a .some method where if element equals value we return. */
+  checkIfExist(array, value) {
     return array.some((element) => {
       return element === value
     })
   }
 
-//iterate through a single keyvalue in a collection of objects and locate a keyvalue pair with a key that has _date with a .search method.
+  /* iterate through a single keyvalue in a collection of objects
+  and locate a keyvalue pair with a key that has _date with a .search method. */
   findKeyInObject(date){
     for (let key in date) {
       if (key.search('_date') !== -1) {
@@ -262,10 +287,10 @@ class App extends Component {
 
 // we then use date[dateKey] to explicitly use the dateKey variable and location the date produced by forEach method and slice out the year portion with slice(0,4). thus getting current year. everything else is self explanatory.
   getYears(dates) {
-    let year_array = [];
+    const year_array = [];
     dates.forEach((date) => {
-      let dateKey = this.findKeyInObject(date);
-      let curr_year = date[dateKey].slice(0,4);
+      const dateKey = this.findKeyInObject(date);
+      let curr_year = date[dateKey].slice(0, 4);
       if (year_array.length === 0) {
         year_array.push(curr_year);
       } else if (!this.checkIfExist(year_array, curr_year)) {
@@ -304,7 +329,7 @@ class App extends Component {
         }
       });
   }
-
+  
 //used in dashboard year selector
   handleSelectYearCall(value){
     this.setState({
@@ -457,6 +482,8 @@ class App extends Component {
                   {...props}
                   lineChartData={this.state.lineChartData}
                   barChartData={this.state.barChartData}
+                  handleYearsView={this.handleYearsView}
+                  years={this.state.years}
                 />)}
               />
 

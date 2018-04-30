@@ -58,16 +58,11 @@ class SalesForm extends Component {
           }}
           className={this.props.className}
         >
-
-          {this.props.salesStatus === 'success' ? (
-            <ModalBody>
-              Order Created Succesfully
+           <ModalBody>
+            {this.props.salesStatus === 'success' ?
+                "Order Created Succesfully" : "There is an error"
+              }
             </ModalBody>
-            ) : (
-            <ModalBody>
-              There is an error
-            </ModalBody>
-            )}
 
           <ModalFooter>
             <Button color="danger" onClick={this.props.salesCreatedToggle}>Ok</Button>
