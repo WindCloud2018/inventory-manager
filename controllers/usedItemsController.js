@@ -36,6 +36,7 @@ module.exports = {
           used_quantity: req.body[key]['quantity'],
         }
         usedItemsDB.save(newUsedItemData)
+
           // run second query in same object loop to update inventory quantity from quantity used.
           .then((newUsedItemData) => {
             inventoriesDB.deductFromSales(newUsedItemData)
@@ -51,20 +52,20 @@ module.exports = {
       .then((usedItem) => {
         res.json({
           message: 'usedItems updated',
-          usedItem
-        })
+          usedItem,
+        });
       })
       .catch(err => next(err));
   },
 
   usedItemsDestroy(req, res, next) {
     usedItemsDB.destroy(req.params.id)
-    .then(() => {
-      res.json({
-        message: 'usedItem has been deleted',
+      .then(() => {
+        res.json({
+          message: 'usedItem has been deleted',
+        });
       })
-    })
-    .catch (err => next(err));
-  }
+      .catch (err => next(err));
+  },
 
 };
