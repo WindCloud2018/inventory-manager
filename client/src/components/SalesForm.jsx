@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import '../css/SalesForm.css';
 
 
@@ -49,40 +49,66 @@ class SalesForm extends Component {
 
   render() {
     return (
-      <Form className="sales-form-container">
-        {this.props.items.map(item => (
-          <FormGroup
-            key={item.item_id}
-            className="sales-form-block"
-          >
-            {/* map through items table and check for selectable column, show only if true */}
-            {item.selectable ? (
-              <div className="sales-form">
-                <Label
-                  for={item.item}
-                  className="sales-form-left"
-                >
-                  {item.item[0].toUpperCase() + item.item.slice(1)}
-                </Label>
-                <Input
-                  type="select"
-                  name={item.item}
-                  id={item.item_id}
-                  className="sales-form-right"
-                  onChange={this.handleChange}
-                >
-                  <option value="1">Included</option>
-                  <option value="2">Extra</option>
-                  <option value="0">None</option>
-                </Input>
-              </div>
+      <div>
+
+        <Modal
+          isOpen={this.props.salesModal}
+          toggle={() => {
+            this.props.salesCreatedToggle();
+          }}
+          className={this.props.className}
+        >
+
+          {this.props.salesStatus === 'success' ? (
+            <ModalBody>
+              Order Created Succesfully
+            </ModalBody>
             ) : (
-              <p />
+            <ModalBody>
+              There is an error
+            </ModalBody>
             )}
-          </FormGroup>
-        ))}
-        <Button onClick={this.handleSubmit}>Order</Button>
-      </Form>
+
+          <ModalFooter>
+            <Button color="danger" onClick={this.props.salesCreatedToggle}>Ok</Button>
+          </ModalFooter>
+        </Modal>
+
+        <Form className="sales-form-container">
+          {this.props.items.map(item => (
+            <FormGroup
+              key={item.item_id}
+              className="sales-form-block"
+            >
+              {/* map through items table and check for selectable column, show only if true */}
+              {item.selectable ? (
+                <div className="sales-form">
+                  <Label
+                    for={item.item}
+                    className="sales-form-left"
+                  >
+                    {item.item[0].toUpperCase() + item.item.slice(1)}
+                  </Label>
+                  <Input
+                    type="select"
+                    name={item.item}
+                    id={item.item_id}
+                    className="sales-form-right"
+                    onChange={this.handleChange}
+                  >
+                    <option value="1">Included</option>
+                    <option value="2">Extra</option>
+                    <option value="0">None</option>
+                  </Input>
+                </div>
+              ) : (
+                <p />
+              )}
+            </FormGroup>
+          ))}
+          <Button onClick={this.handleSubmit}>Order</Button>
+        </Form>
+      </div>
     );
   }
 }

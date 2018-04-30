@@ -26,6 +26,9 @@ class App extends Component {
       currentYear: null,
       lineChartData: null,
       barChartData: null,
+      salesYearToView: 2,
+      salesModal: false,
+      salesStatus: '',
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -36,6 +39,7 @@ class App extends Component {
     this.findKeyInObject = this.findKeyInObject.bind(this);
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
+    this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
   }
 
   componentWillMount() {
@@ -53,6 +57,9 @@ class App extends Component {
   }
 
   getLineChartData() {
+    // choose how many year back you want to view
+    this.state.salesYearToView
+
     this.setState({
       lineChartData: {
         labels: this.state.monthLables,
@@ -63,17 +70,8 @@ class App extends Component {
             lineTension: 0,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
             pointRadius: 3,
             pointHitRadius: 10,
             data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
@@ -101,9 +99,9 @@ class App extends Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          }
-        ]
+            data: [65, 59, 80, 81, 56, 55, 40],
+          },
+        ],
       },
     });
   }
@@ -154,7 +152,7 @@ class App extends Component {
     axios.get('/api/inventories')
       .then(res => (
         this.setState({
-          inventories: res.data.inventories
+          inventories: res.data.inventories,
         })
       ))
       .catch(err => console.log(err));
@@ -163,11 +161,12 @@ class App extends Component {
   getInventoryCosts() {
     axios.get('/api/inventorycosts')
       .then((res) => {
+        this.getYears(res.data.inventory_costs);
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
         });
-      });
+      })
   }
 
   checkIfExist(array, value){
@@ -194,12 +193,20 @@ class App extends Component {
       if (year_array.length === 0) {
         year_array.push(curr_year);
       } else if (!this.checkIfExist(year_array, curr_year)) {
-        year_array.push(curr_year)
+        year_array.push(curr_year);
       }
-    })
+    });
     this.setState({
-      years: year_array
-    })
+      years: year_array,
+    });
+  }
+
+  // trigger modal pop up to
+  salesCreatedToggle(message) {
+    this.setState({
+      salesModal: !this.state.salesModal,
+      salesStatus: message,
+    });
   }
 
   // create new order and get that order id
@@ -207,11 +214,19 @@ class App extends Component {
     event.preventDefault();
     axios.post('/api/orders', data)
       .then((res) => {
+        if (res.status === 200) {
         // add newest order id as new key/value into data
-        data.latestOrderId = res.data.last_order.order_id;
-        axios.post('/api/useditems', data);
-      })
+          data.latestOrderId = res.data.last_order.order_id;
 
+          // trigger modal pop up to notify that sales has created
+          this.salesCreatedToggle('success');
+
+          // axios call to update useditem table and in inventory table in database
+          axios.post('/api/useditems', data);
+        } else {
+          this.salesCreatedToggle('failed');
+        }
+      });
   }
 
   handleSelectYearCall(value){
@@ -221,7 +236,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.inventory_costs, 'this is inventory costs');
+    // console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
       <div className="App">
         <Header />
@@ -239,23 +254,28 @@ class App extends Component {
                   currentDate={this.state.currentDate}
                   items={this.state.items}
                   orders={this.state.orders}
+                  salesModal={this.state.salesModal}
+                  salesCreatedToggle={this.salesCreatedToggle}
+                  salesStatus={this.state.salesStatus}
+
                 />)}
               />
               <Route
-                path='/dashboard'
-                render={props => <Dashboard {...props}
-                        inventories={this.state.inventories}
-                        orders={this.state.orders}
-                        inventory_costs={this.state.inventory_costs}
-                        items={this.state.items}
-                        dataLoaded={this.state.dataLoaded}
-                        getInventories={this.getInventories}
-                        getInventoryCosts={this.getInventoryCosts}
-                        getYears={this.getYears}
-                        currentYear={this.state.currentYear}
-                        years={this.state.years}
+                path="/dashboard"
+                render={props => (<Dashboard
+                  {...props}
+                  inventories={this.state.inventories}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
+                  items={this.state.items}
+                  dataLoaded={this.state.dataLoaded}
+                  getInventories={this.getInventories}
+                  getInventoryCosts={this.getInventoryCosts}
+                  getYears={this.getYears}
+                  currentYear={this.state.currentYear}
+                  years={this.state.years}
 
-                />}
+                />)}
               />
 
               <Route

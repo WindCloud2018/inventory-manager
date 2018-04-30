@@ -28,7 +28,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.findTotalItemCost();
-    this.props.getYears(this.props.inventory_costs);
+    // this.props.getYears(this.props.inventory_costs);
   }
 
 //ask when to use componentWillReceiveProps() vs componentWillUpate

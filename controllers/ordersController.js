@@ -25,18 +25,18 @@ module.exports = {
 
   orderCreate(req, res, next) {
     ordersDB.save({
-      order_date: req.body.currentDate
+      order_date: req.body.currentDate,
     })
-    .then(() => (
-      ordersDB.findLastOrderId()
-    ))
-    .then((last_order) => {
-      res.json({
-        message: 'New order created',
-        last_order
-      });
-    })
-    .catch(err => next(err));
+      .then(() => (
+        ordersDB.findLastOrderId()
+      ))
+      .then((last_order) => {
+        res.json({
+          message: 'New order created',
+          last_order
+        });
+      })
+      .catch(err => next(err));
   },
 
   orderUpdate(req, res, next) {
