@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      monthLables: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      monthLabels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       orders: null,
       inventories: null,
       items: null,
@@ -29,6 +29,14 @@ class App extends Component {
       salesYearToView: 2,
       salesModal: false,
       salesStatus: '',
+
+      item_id: '1',
+      inventory_quantity: '',
+      cost_per_unit: '',
+      totalCost: null,
+      modal: false,
+      missing_info: false,
+      inventoryCostData: {}
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -43,6 +51,15 @@ class App extends Component {
     this.getCurrentMonth = this.getCurrentMonth.bind(this);
     this.getCurrentYear = this.getCurrentYear.bind(this);
     this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
+
+    this.handleInventorySubmit = this.handleInventorySubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleQuantityUpdate = this.handleQuantityUpdate.bind(this);
+    this.handleCreateAndUpdate = this.handleCreateAndUpdate.bind(this);
+    this.findTotalItemCost = this.findTotalItemCost.bind(this);
+    this.checkFilled = this.checkFilled.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.toggleMissing = this.toggleMissing.bind(this);
   }
 
   componentWillMount() {
@@ -79,6 +96,12 @@ class App extends Component {
     console.log(currYear, 'this is the current year')
     this.setState({
       currentYear: currYear
+    })
+  }
+
+  getInventoryCostData() {
+    this.setState({
+
     })
   }
 
@@ -265,6 +288,100 @@ class App extends Component {
     });
   }
 
+  handleMonthCall(value) {
+    this.setState({
+      currentMonth: value
+    })
+  }
+
+//toggles inventoryModal in state
+  toggle(){
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  toggleMissing() {
+    this.setState({
+      missing_info: !this.state.missing_info
+    });
+  }
+
+  //method passed down to inventory and into inventory form to handle changes to dashboard state.
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+//checkedFilled only active when submit button is pressed. Checking dashboard state whether its state is empty, if not empty then proceed to post in handleSubmit method.
+  checkFilled() {
+    if (
+      this.state.item_id !== '' &&
+      this.state.inventory_quantity !== '' &&
+      this.state.cost_per_unit !== ''
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+//this method calculates the total cost of inventory. will need to add another method to filter out expenses by month.
+  findTotalItemCost() {
+    let sum = 0;
+    this.props.inventory_costs.map((inventory_cost) => {
+      const itemTotal = inventory_cost.inventory_quantity * inventory_cost.cost_per_unit;
+      sum += itemTotal;
+      return sum;
+
+    })
+    console.log(sum, 'before setting state SUM')
+    this.setState({
+       totalCost: sum
+    });
+  }
+
+
+//method run both create and update and then find total for inventory expense
+  handleCreateAndUpdate() {
+    this.handleInventorySubmit();
+    this.handleQuantityUpdate();
+  }
+
+
+  //method posts dashboard state into inventory_costs table then refreshes inventoryCosts.
+  handleInventorySubmit(){
+    if (this.checkFilled()) {
+      axios.post('/api/inventorycosts', this.state)
+      .then(res => {
+        this.props.getInventoryCosts();
+      })
+    } else {
+      this.toggleMissing();
+    }
+  }
+
+  /*method updates the total inventory quantity. even though state has costperunit it wont update inventories database because in models we customized the SET update to only add quantity and item_id*/
+
+  handleQuantityUpdate() {
+    const rootUrl = window.location.origin;
+    const pathUrl = `/api/inventories/${this.state.item_id}`;
+    const newUrl = rootUrl.concat(pathUrl);
+    if (this.checkFilled()) {
+      axios.put(newUrl, this.state)
+      .then(res => {
+        this.props.getInventories();
+      })
+    } else {
+      this.setState({
+        missing_info: true
+      })
+    }
+  }
+
   render() {
     // console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
@@ -300,11 +417,20 @@ class App extends Component {
                         dataLoaded={this.state.dataLoaded}
                         getInventories={this.getInventories}
                         getInventoryCosts={this.getInventoryCosts}
-                        getYears={this.getYears}
+                        monthLabels={this.state.monthLabels}
                         currentYear={this.state.currentYear}
                         years={this.state.years}
-                        handleSelectYearCall={this.handleSelectYearCall}
 
+                        //handle methods
+                        toggle = {this.toggle}
+                        handleInventorySubmit = {this.handleInventorySubmit}
+                        handleChange = {this.handleChange}
+                        handleQuantityUpdate = {this.handleQuantityUpdate}
+                        handleCreateAndUpdate = {this.handleCreateAndUpdate}
+                        findTotalItemCost = {this.findTotalItemCost}
+                        checkFilled = {this.checkFilled}
+                        toggleMissing = {this.toggleMissing}
+                        handleSelectYearCall={this.handleSelectYearCall}
                 />}
               />
 
