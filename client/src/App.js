@@ -28,7 +28,7 @@ class App extends Component {
       barChartData: null,
       salesYearToView: 2,
       salesModal: false,
-      salesStatus: "",
+      salesStatus: '',
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -161,11 +161,12 @@ class App extends Component {
   getInventoryCosts() {
     axios.get('/api/inventorycosts')
       .then((res) => {
+        this.getYears(res.data.inventory_costs);
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
         });
-      });
+      })
   }
 
   checkIfExist(array, value){
@@ -260,20 +261,21 @@ class App extends Component {
                 />)}
               />
               <Route
-                path='/dashboard'
-                render={props => <Dashboard {...props}
-                        inventories={this.state.inventories}
-                        orders={this.state.orders}
-                        inventory_costs={this.state.inventory_costs}
-                        items={this.state.items}
-                        dataLoaded={this.state.dataLoaded}
-                        getInventories={this.getInventories}
-                        getInventoryCosts={this.getInventoryCosts}
-                        getYears={this.getYears}
-                        currentYear={this.state.currentYear}
-                        years={this.state.years}
+                path="/dashboard"
+                render={props => (<Dashboard
+                  {...props}
+                  inventories={this.state.inventories}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
+                  items={this.state.items}
+                  dataLoaded={this.state.dataLoaded}
+                  getInventories={this.getInventories}
+                  getInventoryCosts={this.getInventoryCosts}
+                  getYears={this.getYears}
+                  currentYear={this.state.currentYear}
+                  years={this.state.years}
 
-                />}
+                />)}
               />
 
               <Route
