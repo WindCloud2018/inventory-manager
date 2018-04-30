@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
 import '../css/InventoryForm.css';
+import MissingInfoModal from './MissingInfoModal';
 
 
 const InventoryForm = props => {
 
   return(
+    <div>
     <Form>
       <FormGroup>
         <Label for="item"> Item </Label>
@@ -63,6 +65,9 @@ const InventoryForm = props => {
         </Button>
       </ModalFooter>
     </Form>
+
+     <MissingInfoModal {...props} />
+  </div>
   );
 }
 

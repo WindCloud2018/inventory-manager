@@ -48,33 +48,8 @@ const Dashboard = props => {
 
         <InventoryCosts {...props} />
 
-        <Inventory {...this.props}
-                   handleChange={props.handleChange}
-                   toggle={props.toggle}
-                   inventory_id={props.inventory_id}
-                   item_id={props.item_id}
-                   inventory_quantity={props.inventory_quantity}
-                   cost_per_unit={props.cost_per_unit}
-                   modal={props.modal}
-                   handleCreateAndUpdate={props.handleCreateAndUpdate}
-                   findTotalItemCost={props.findTotalItemCost}
-                   checkFilled={props.checkFilled}
-                   toggleMissing={props.toggleMissing}
+        <Inventory {...props} />
 
-        />
-
-      {/* Show this modal warning if missing fields were not filled in */}
-      <Form>
-      <Modal isOpen={props.missing_info}
-             className = {props.className}>
-             <ModalBody>
-              Please Fill Out All Sections
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" onClick={props.toggleMissing}> OK </Button>
-            </ModalFooter>
-      </Modal>
-      </Form>
     </div>
     );
 }
