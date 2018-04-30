@@ -22,7 +22,7 @@ class App extends Component {
       dataLoaded: false,
       currentDate: null,
       years: [],
-      months: [],
+      currentMonth: null,
       currentYear: null,
       lineChartData: null,
       barChartData: null,
@@ -39,6 +39,9 @@ class App extends Component {
     this.findKeyInObject = this.findKeyInObject.bind(this);
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
+    this.handleSelectYearCall = this.handleSelectYearCall.bind(this);
+    this.getCurrentMonth = this.getCurrentMonth.bind(this);
+    this.getCurrentYear = this.getCurrentYear.bind(this);
     this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
   }
 
@@ -49,11 +52,34 @@ class App extends Component {
     this.getInventoryCosts();
     this.getCurrentDate();
     this.getInventories();
+    this.getCurrentMonth();
+    this.getCurrentYear();
   }
 
   componentDidMount() {
     this.getLineChartData();
     this.getBarChartData();
+  }
+
+//get current month so we can compare with database month. and render specific month user choses on selector.
+  getCurrentMonth() {
+    const current = new Date().getMonth();
+    console.log(current, 'this is currentMonth')
+    let newCurrent = current + 1
+    if (newCurrent < 10) {
+      newCurrent = '0' + newCurrent;
+    }
+    this.setState({
+      currentMonth: newCurrent
+    });
+  }
+
+  getCurrentYear(){
+    const currYear = new Date().getFullYear().toString();
+    console.log(currYear, 'this is the current year')
+    this.setState({
+      currentYear: currYear
+    })
   }
 
   getLineChartData() {
@@ -169,12 +195,15 @@ class App extends Component {
       })
   }
 
+
+//take in two parameters an array and a value and return with a .some method where if element equals value we return.
   checkIfExist(array, value){
     return array.some((element) => {
       return element === value
     })
   }
 
+//iterate through a single keyvalue in a collection of objects and locate a keyvalue pair with a key that has _date with a .search method.
   findKeyInObject(date){
     console.log(date, 'this is dates findKeyInObject')
     for (let key in date) {
@@ -185,6 +214,7 @@ class App extends Component {
     }
   }
 
+// we then use date[dateKey] to explicitly use the dateKey variable and location the date produced by forEach method and slice out the year portion with slice(0,4). thus getting current year. everything else is self explanatory.
   getYears(dates) {
     let year_array = [];
     dates.forEach((date) => {
@@ -261,21 +291,21 @@ class App extends Component {
                 />)}
               />
               <Route
-                path="/dashboard"
-                render={props => (<Dashboard
-                  {...props}
-                  inventories={this.state.inventories}
-                  orders={this.state.orders}
-                  inventory_costs={this.state.inventory_costs}
-                  items={this.state.items}
-                  dataLoaded={this.state.dataLoaded}
-                  getInventories={this.getInventories}
-                  getInventoryCosts={this.getInventoryCosts}
-                  getYears={this.getYears}
-                  currentYear={this.state.currentYear}
-                  years={this.state.years}
+                path='/dashboard'
+                render={props => <Dashboard {...props}
+                        inventories={this.state.inventories}
+                        orders={this.state.orders}
+                        inventory_costs={this.state.inventory_costs}
+                        items={this.state.items}
+                        dataLoaded={this.state.dataLoaded}
+                        getInventories={this.getInventories}
+                        getInventoryCosts={this.getInventoryCosts}
+                        getYears={this.getYears}
+                        currentYear={this.state.currentYear}
+                        years={this.state.years}
+                        handleSelectYearCall={this.handleSelectYearCall}
 
-                />)}
+                />}
               />
 
               <Route
