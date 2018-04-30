@@ -170,12 +170,15 @@ class App extends Component {
       });
   }
 
+
+//take in two parameters an array and a value and return with a .some method where if element equals value we return.
   checkIfExist(array, value){
     return array.some((element) => {
       return element === value
     })
   }
 
+//iterate through a single keyvalue in a collection of objects and locate a keyvalue pair with a key that has _date with a .search method.
   findKeyInObject(date){
     console.log(date, 'this is dates findKeyInObject')
     for (let key in date) {
@@ -186,6 +189,7 @@ class App extends Component {
     }
   }
 
+// we then use date[dateKey] to explicitly use the dateKey variable and location the date produced by forEach method and slice out the year portion with slice(0,4). thus getting current year. everything else is self explanatory.
   getYears(dates) {
     let year_array = [];
     dates.forEach((date) => {
