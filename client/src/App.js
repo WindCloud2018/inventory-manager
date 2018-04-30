@@ -16,7 +16,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      monthLables: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      months: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       yearColors: [
         'rgba(93,138,168,1)',
         'rgba(93,168,123,0.3)',
@@ -125,7 +125,7 @@ class App extends Component {
       }
     })
   }
-  
+
   handleYearsView(e) {
     this.setState({
       salesYearToView: e,
@@ -158,7 +158,7 @@ class App extends Component {
     });
     this.setState({
       lineChartData: {
-        labels: this.state.monthLables,
+        labels: this.state.months,
         datasets,
       },
     });
@@ -167,7 +167,7 @@ class App extends Component {
   getBarChartData() {
     this.setState({
       barChartData: {
-        labels: this.state.monthLables,
+        labels: this.state.months,
         datasets: [
           {
             label: 'My First dataset',
@@ -329,7 +329,7 @@ class App extends Component {
         }
       });
   }
-  
+
 //used in dashboard year selector
   handleSelectYearCall(value){
     this.setState({
@@ -448,30 +448,30 @@ class App extends Component {
               <Route
                 path='/dashboard'
                 render={props => <Dashboard {...props}
-                        inventories={this.state.inventories}
-                        orders={this.state.orders}
-                        inventory_costs={this.state.inventory_costs}
-                        items={this.state.items}
-                        dataLoaded={this.state.dataLoaded}
-                        getInventories={this.getInventories}
-                        getInventoryCosts={this.getInventoryCosts}
-                        monthLabels={this.state.monthLabels}
-                        currentYear={this.state.currentYear}
-                        years={this.state.years}
-                        totalCost={this.state.totalCost}
-                        modal = {this.state.modal}
-                        missingInfo = {this.state.missing_info}
+                  inventories={this.state.inventories}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
+                  items={this.state.items}
+                  dataLoaded={this.state.dataLoaded}
+                  getInventories={this.getInventories}
+                  getInventoryCosts={this.getInventoryCosts}
+                  months={this.state.months}
+                  currentYear={this.state.currentYear}
+                  years={this.state.years}
+                  totalCost={this.state.totalCost}
+                  modal = {this.state.modal}
+                  missingInfo = {this.state.missing_info}
 
-                        //handle methods
-                        toggle = {this.toggle}
-                        handleInventorySubmit = {this.handleInventorySubmit}
-                        handleChange = {this.handleChange}
-                        handleQuantityUpdate = {this.handleQuantityUpdate}
-                        handleCreateAndUpdate = {this.handleCreateAndUpdate}
-                        findTotalItemCost = {this.findTotalItemCost}
-                        checkFilled = {this.checkFilled}
-                        toggleMissing = {this.toggleMissing}
-                        handleSelectYearCall={this.handleSelectYearCall}
+                  //handle methods
+                  toggle = {this.toggle}
+                  handleInventorySubmit = {this.handleInventorySubmit}
+                  handleChange = {this.handleChange}
+                  handleQuantityUpdate = {this.handleQuantityUpdate}
+                  handleCreateAndUpdate = {this.handleCreateAndUpdate}
+                  findTotalItemCost = {this.findTotalItemCost}
+                  checkFilled = {this.checkFilled}
+                  toggleMissing = {this.toggleMissing}
+                  handleSelectYearCall={this.handleSelectYearCall}
                 />}
               />
 

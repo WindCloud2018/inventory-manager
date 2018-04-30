@@ -16,7 +16,7 @@ const Dashboard = props => {
             <select value={props.currentMonth}
                     onChange={(e) => {props.handleMonthCall(e.target.value)}}
             >
-            {props.monthLabels.map((month, i) => {
+            {props.months.map((month, i) => {
               const index = i < 9 ? '0' + (i + 1) :
               (String(i+1))
               return <option key={i}
