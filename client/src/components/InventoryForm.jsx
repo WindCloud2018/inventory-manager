@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
 import '../css/InventoryForm.css';
-import MissingInfoModal from './MissingInfoModal';
 
 
 const InventoryForm = props => {
@@ -66,7 +65,6 @@ const InventoryForm = props => {
       </ModalFooter>
     </Form>
 
-     <MissingInfoModal {...props} />
   </div>
   );
 }

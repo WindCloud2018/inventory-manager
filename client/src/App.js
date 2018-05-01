@@ -8,7 +8,6 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Sales from './components/Sales';
 import Overview from './components/Overview';
-import { Button, Form, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import MissingInfoModal from './components/MissingInfoModal';
 
 class App extends Component {
@@ -45,7 +44,7 @@ class App extends Component {
       totalCost: null,
       modal: false,
       missing_info: false,
-      inventoryCostData: {}
+      inventoryCostData: []
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -56,7 +55,6 @@ class App extends Component {
     this.findKeyInObject = this.findKeyInObject.bind(this);
     this.getLineChartData = this.getLineChartData.bind(this);
     this.getBarChartData = this.getBarChartData.bind(this);
-    this.handleSelectYearCall = this.handleSelectYearCall.bind(this);
     this.getCurrentMonth = this.getCurrentMonth.bind(this);
     this.getCurrentYear = this.getCurrentYear.bind(this);
     this.salesCreatedToggle = this.salesCreatedToggle.bind(this);
@@ -69,6 +67,9 @@ class App extends Component {
     this.checkFilled = this.checkFilled.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleMissing = this.toggleMissing.bind(this);
+
+    this.getInventoryCostData = this.getInventoryCostData.bind(this);
+    this.handleMonthYearChange = this.handleMonthYearChange.bind(this);
   }
 
   componentDidMount() {
@@ -116,15 +117,7 @@ class App extends Component {
     return data;
   }
 
-  getInventoryCostData() {
-    this.setState({
-      inventoryCostData : {
-        inventory_quantity: this.state.inventory_quantity,
-        cost_per_unit: this.state.cost_per_unit,
 
-      }
-    })
-  }
 
   handleYearsView(e) {
     this.setState({
@@ -247,6 +240,7 @@ class App extends Component {
           dataLoaded: true,
         })
         this.findTotalItemCost();
+        this.getInventoryCostData();
       })
   }
 
@@ -285,7 +279,7 @@ class App extends Component {
     }
   }
 
-// we then use date[dateKey] to explicitly use the dateKey variable and location the date produced by forEach method and slice out the year portion with slice(0,4). thus getting current year. everything else is self explanatory.
+// we then use date[dateKey] to explicitly use the dateKey variable and locate the keyvalue pair from the forEach method. sliced out the year portion with slice(0,4). thus getting current year. followed by helper functions.
   getYears(dates) {
     const year_array = [];
     dates.forEach((date) => {
@@ -330,35 +324,60 @@ class App extends Component {
       });
   }
 
-//used in dashboard year selector
-  handleSelectYearCall(value){
-    this.setState({
-      currentYear: value
-    });
-  }
 
-//used in dashboard month selector
-  handleMonthCall(value) {
+/*getCostData takes in two parameters, year and month.
+Depending on its value and its availibility through the search method used on inventoryCost, the resulting data will be pushed to costData array and setting state to that array.
+*/
+  getCostData(yearValue, monthValue) {
+    const costData = [];
+    this.state.inventory_costs.map((inventoryCost) => {
+
+        const inventoryCostDate = yearValue + '-' + monthValue;
+        if (inventoryCost.inventory_date.search(inventoryCostDate) !== -1) {
+            costData.push(inventoryCost)
+          }
+        }
+      )
     this.setState({
-      currentMonth: value
+      inventoryCostData: costData
     })
   }
 
-//toggles inventoryModal in state
+/*
+  this method takes in two parameters name and value when changes are made in the month or year selector. condition if and else sets getCost function.
+*/
+  getInventoryCostData(name, value) {
+    if (name === 'currentMonth') {
+      this.getCostData(this.state.currentYear, value);
+    } else {
+      this.getCostData(value, this.state.currentMonth);
+    }
+  }
+
+  handleMonthYearChange(e) {
+    const name = e.target.name
+    const value = e.target.value
+    this.setState({
+      [name]: value
+    })
+    this.getInventoryCostData(name, value)
+  }
+
+//toggles inventoryModal in state, exists in FormModal component
   toggle(){
     this.setState({
       modal: !this.state.modal
     });
   }
 
-//toggles missingInfo in state
+//toggles missingInfo in state, exists in MissingInfo Component
   toggleMissing() {
     this.setState({
       missing_info: !this.state.missing_info
     });
   }
 
-  //method passed down to inventory and into inventory form to handle changes to dashboard state.
+ //handles changes in InventoryForm Component, changes State of item_id, inventoryquantity, and cpu
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -367,7 +386,7 @@ class App extends Component {
     });
   }
 
-//checkedFilled only active when submit button is pressed. Checking dashboard state whether its state is empty, if not empty then proceed to post in handleSubmit method.
+//checkedFilled only active when submit button is pressed. exists handleInventorySubmit method and is used in handleCreateAndUpdate method located in InventoryForm Component.
   checkFilled() {
     if (
       this.state.item_id !== '' &&
@@ -461,6 +480,7 @@ class App extends Component {
                   totalCost={this.state.totalCost}
                   modal = {this.state.modal}
                   missingInfo = {this.state.missing_info}
+                  inventoryCostData={this.state.inventoryCostData}
 
                   //handle methods
                   toggle = {this.toggle}
@@ -470,8 +490,10 @@ class App extends Component {
                   handleCreateAndUpdate = {this.handleCreateAndUpdate}
                   findTotalItemCost = {this.findTotalItemCost}
                   checkFilled = {this.checkFilled}
-                  toggleMissing = {this.toggleMissing}
-                  handleSelectYearCall={this.handleSelectYearCall}
+                  toggleMissing={this.toggleMissing}
+                  handleSelectYearCall = {this.handleSelectYearCall}
+                  handleMonthCall = {this.handleMonthCall}
+                  handleMonthYearChange = {this.handleMonthYearChange}
                 />}
               />
 

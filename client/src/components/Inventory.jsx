@@ -1,14 +1,12 @@
 import React from 'react';
 import '../css/Inventory.css';
 import ModalForm from './ModalForm';
-import { Button, Form, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 const Inventory = props =>{
 
   return(
     <div className='inventory-container'>
-
-      <ModalForm {...props}/>
 
       <p> Restaurant Inventory </p>
 
@@ -34,6 +32,9 @@ const Inventory = props =>{
           </div>
         })}
       </div>
+
+      <ModalForm {...props}/>
+
     </div>
   );
 }
