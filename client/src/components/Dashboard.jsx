@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../css/Dashboard.css';
 import InventoryCosts from './InventoryCosts';
 import Inventory from './Inventory';
-import axios from 'axios';
-import { Button, Form, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 const Dashboard = props => {
 
@@ -14,7 +12,8 @@ const Dashboard = props => {
 
           <form className="selector-container-left">
             <select value={props.currentMonth}
-                    onChange={(e) => {props.handleMonthCall(e.target.value)}}
+                    name="currentMonth"
+                    onChange={(e) => {props.handleMonthYearChange(e)}}
             >
             {props.months.map((month, i) => {
               const index = i < 9 ? '0' + (i + 1) :
@@ -30,8 +29,9 @@ const Dashboard = props => {
 
           <form className="selector-container-right">
             <select value={props.currentYear}
+                    name="currentYear"
                     onChange={(e) => {
-                    props.handleSelectYearCall(e.target.value)}}>
+                    props.handleMonthYearChange(e)}}>
             {props.years.map((year, i) => {
               return <option  key={i}
                               value={year}>
