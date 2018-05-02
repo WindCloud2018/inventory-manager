@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/Sidebar.css';
+import appLogo from '../img/inventoryapplogo.png';
 import { NavLink } from 'react-router-dom';
 import { Nav, NavItem } from 'reactstrap';
 
 const Sidebar = (props) => {
   return (
     <div className="sidebar">
-      <h3> Inventory Management </h3>
+      <img src={appLogo} alt="Warehouse" className="app-logo" />
       <Nav className="sidenav" vertical>
         <NavItem className="nav-link">
           <NavLink to="/">Sales</NavLink>

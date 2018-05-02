@@ -6,3 +6,8 @@
   text-decoration: none;
   list-style: none;
 }
+
+.app-logo {
+  width: 200px;
+  height: 200px;
+}
