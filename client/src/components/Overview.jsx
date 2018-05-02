@@ -7,7 +7,7 @@ import '../css/Overview.css';
 const Overview = (props) => {
   return (
     <div className="overview-container">
-      <div className="overview-left">
+      <div className="overview-top">
         <form>
           <label htmlFor="years-option">Years to View
             <select
@@ -23,6 +23,8 @@ const Overview = (props) => {
             </select>
           </label>
         </form>
+      </div>
+      <div className="overview-left">
         <LineChart {...props} />
       </div>
       <div className="overview-right">

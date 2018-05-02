@@ -105,6 +105,7 @@ class App extends Component {
   }
 
   lineChartDataHelper(year) {
+    console.log("helper running")
     // create array with length of 12, fill each with 0
     const data = Array(12).fill(0);
     this.state.orders.map((order, i) => {
@@ -128,6 +129,7 @@ class App extends Component {
   }
 
   getLineChartData() {
+    console.log("running or not")
     const yearsView = Number(this.state.salesYearToView);
     const yearColors = this.state.yearColors;
     const datasets = [];
@@ -315,13 +317,17 @@ class App extends Component {
 
           // trigger modal pop up to notify that sales has created
           this.salesCreatedToggle('success');
+          this.getOrders();
+          this.getLineChartData();
 
           // axios call to update useditem table and in inventory table in database
-          axios.post('/api/useditems', data);
+          axios.post('/api/useditems', data)
+
         } else {
           this.salesCreatedToggle('failed');
         }
-      });
+      })
+
   }
 
 
@@ -506,6 +512,8 @@ Depending on its value and its availibility through the search method used on in
                   barChartData={this.state.barChartData}
                   handleYearsView={this.handleYearsView}
                   years={this.state.years}
+                  orders={this.state.orders}
+                  inventory_costs={this.state.inventory_costs}
                 />)}
               />
 
