@@ -33,7 +33,7 @@ class App extends Component {
       currentMonth: null,
       currentYear: null,
       lineChartData: null,
-      barChartData: null,
+      barChartData: {},
       salesYearToView: 1,
       salesModal: false,
       salesStatus: '',
@@ -44,7 +44,8 @@ class App extends Component {
       totalCost: null,
       modal: false,
       missing_info: false,
-      inventoryCostData: []
+      inventoryCostData: [],
+      inventoryData: []
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -70,6 +71,7 @@ class App extends Component {
 
     this.getInventoryCostData = this.getInventoryCostData.bind(this);
     this.handleMonthYearChange = this.handleMonthYearChange.bind(this);
+    this.preLoadInventoryCost = this.preLoadInventoryCost.bind(this);
   }
 
   componentDidMount() {
@@ -159,6 +161,11 @@ class App extends Component {
   }
 
   getBarChartData() {
+    const data = [];
+    {this.state.inventories.map((inventory) => {
+      data.push(inventory.inventory_quantity)
+    })}
+
     this.setState({
       barChartData: {
         labels: this.state.months,
@@ -170,7 +177,7 @@ class App extends Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: data,
           },
         ],
       },
@@ -234,8 +241,6 @@ class App extends Component {
       .then((res) => {
         // run filter through respond data to find all years.
         this.getYears(res.data.inventory_costs);
-
-        this.getBarChartData();
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
@@ -243,9 +248,11 @@ class App extends Component {
         this.getLineChartData();
         this.findTotalItemCost();
         this.getInventoryCostData();
-
+        this.preLoadInventoryCost();
+        this.getBarChartData();
       })
   }
+
 
 //this method calculates the total cost of inventory. will need to add another method to filter out expenses by month.
   findTotalItemCost() {
@@ -350,6 +357,7 @@ Depending on its value and its availibility through the search method used on in
     })
   }
 
+
 /*
   this method takes in two parameters name and value when changes are made in the month or year selector. condition if and else sets getCost function.
 */
@@ -361,6 +369,21 @@ Depending on its value and its availibility through the search method used on in
     }
   }
 
+//this method is set initially after inventory cost data is received so inventoryCost renders all current to date costs when page loads.
+  preLoadInventoryCost() {
+    const data = [];
+    {this.state.inventory_costs.map((inventoryCost) => {
+      const dateToday = (this.state.currentYear + '-' + this.state.currentMonth);
+      if (inventoryCost.inventory_date.search(dateToday) > -1) {
+        data.push(inventoryCost);
+      }
+    })}
+    this.setState({
+      inventoryCostData: data
+    })
+  }
+
+//this is used in inventoryForm component, to handle the changes to years and months in the selectors.
   handleMonthYearChange(e) {
     const name = e.target.name
     const value = e.target.value
@@ -488,6 +511,8 @@ Depending on its value and its availibility through the search method used on in
                   modal = {this.state.modal}
                   missingInfo = {this.state.missing_info}
                   inventoryCostData={this.state.inventoryCostData}
+                  currentMonth={this.state.currentMonth}
+                  currentYear={this.state.currentYear}
 
                   //handle methods
                   toggle = {this.toggle}
