@@ -1,6 +1,6 @@
 import React from 'react';
 import LineChart from './LineChart';
-import Chart from './Chart';
+import BarChart from './BarChart';
 import RecentActivity from './RecentActivity';
 import '../css/Overview.css';
 
@@ -26,7 +26,7 @@ const Overview = (props) => {
         <LineChart {...props} />
       </div>
       <div className="overview-right">
-        <Chart {...props} />
+        <BarChart {...props} />
       </div>
       <div className="overview-bottom">
         <RecentActivity {...props} />

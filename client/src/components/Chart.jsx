@@ -1,6 +1,5 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import '../css/Chart.css';
 
 const Chart = (props) => {
   return (
