@@ -6,7 +6,7 @@ module.exports = {
     return db.many(`
       SELECT *
       FROM orders o
-      ORDER BY order_date DESC
+      ORDER BY order_id DESC
     `);
   },
 

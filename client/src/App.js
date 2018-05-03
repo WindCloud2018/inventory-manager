@@ -129,7 +129,6 @@ class App extends Component {
   }
 
   getLineChartData() {
-    console.log("running or not")
     const yearsView = Number(this.state.salesYearToView);
     const yearColors = this.state.yearColors;
     const datasets = [];
@@ -235,14 +234,16 @@ class App extends Component {
       .then((res) => {
         // run filter through respond data to find all years.
         this.getYears(res.data.inventory_costs);
-        this.getLineChartData();
+
         this.getBarChartData();
         this.setState({
           inventory_costs: res.data.inventory_costs,
           dataLoaded: true,
         })
+        this.getLineChartData();
         this.findTotalItemCost();
         this.getInventoryCostData();
+
       })
   }
 
@@ -318,7 +319,7 @@ class App extends Component {
           // trigger modal pop up to notify that sales has created
           this.salesCreatedToggle('success');
           this.getOrders();
-          this.getLineChartData();
+          this.getInventoryCosts()
 
           // axios call to update useditem table and in inventory table in database
           axios.post('/api/useditems', data)
