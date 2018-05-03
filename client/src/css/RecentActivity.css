@@ -1,0 +1,24 @@
+.recent-activity-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50px auto;
+  grid-template-areas:
+    "top top"
+    "left right"
+}
+
+.recent-activity-title {
+  min-height: 50px;
+  grid-area: top;
+}
+
+.recent-activity-left {
+  min-height: 400px;
+
+  grid-area: left;
+}
+
+.recent-activity-right {
+  min-height: 400px;
+  grid-area: right;
+}

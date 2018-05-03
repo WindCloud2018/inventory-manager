@@ -7,7 +7,7 @@ import { Nav, NavItem } from 'reactstrap';
 const Sidebar = (props) => {
   return (
     <div className="sidebar">
-      <img src={appLogo} alt="Warehouse" className="app-logo" />
+      <NavLink to="/"><img src={appLogo} alt="Warehouse" className="app-logo" /></NavLink>
       <Nav className="sidenav" vertical>
         <NavItem className="nav-link">
           <NavLink to="/">Sales</NavLink>

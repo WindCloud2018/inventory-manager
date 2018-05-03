@@ -1,6 +1,14 @@
 # Inventory Manager
 
+<!-- * [Demo](heroku)
+ -->
 Manage your restaurant inventory to reduce waste, calculate profit, and forecast.
+
+### Why build this app?
+* To create an app that handles both relational and nonrelational database.
+* To run a streamline process that will complete number of tasks with single confirmation.
+* To add pass single AJAX call from front-end and let the complexity occurs in server-end when trying to do multiple AJAX calls from front-end.
+* To have all methods in App.js and all component as functional stateless component only. 
 
 ### How to get start
 * Make sure got NodeJS and npm installed

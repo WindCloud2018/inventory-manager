@@ -2,12 +2,18 @@
   padding: 20px 20px;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 50px 400px auto;
   grid-column-gap: 15px;
   grid-row-gap: 15px;
   grid-template-areas:
+    "top top"
     "left right"
     "bottom bottom"
+}
+
+.overview-top {
+  min-height: 50px;
+  grid-area: top;
 }
 
 .overview-left {
