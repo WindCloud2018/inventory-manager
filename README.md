@@ -1,7 +1,7 @@
 # Inventory Manager
 
-* [Demo](heroku)
-
+<!-- * [Demo](heroku)
+ -->
 Manage your restaurant inventory to reduce waste, calculate profit, and forecast.
 
 ### Why build this app?
