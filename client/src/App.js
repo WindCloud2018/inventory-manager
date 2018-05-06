@@ -44,6 +44,7 @@ class App extends Component {
       totalCost: null,
       modal: false,
       missing_info: false,
+      low_inventory: false,
       inventoryCostData: [],
       inventoryData: []
     };
@@ -160,23 +161,32 @@ class App extends Component {
     });
   }
 
+
+  checkQuantity(inventory_quantity) {
+    inventory_quantity < 50 ? 'rgba(255,98,98,0.8)' : ''
+  }
+
   getBarChartData() {
     const data = [];
+    const items = [];
+    let backgroundColor = 'rgba(98,98,255,0.8)'
     {this.state.inventories.map((inventory) => {
       data.push(inventory.inventory_quantity)
+      items.push(inventory.item[0].toUpperCase() + inventory.item.slice(1))
+      backgroundColor = this.checkQuantity(inventory.inventory_quantity) || backgroundColor;
     })}
 
     this.setState({
       barChartData: {
-        labels: this.state.months,
+        labels: items,
         datasets: [
           {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
+            label: 'Quantity',
+            backgroundColor: backgroundColor,
+            borderColor: backgroundColor,
             borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
+            // hoverBackgroundColor: 'rgba(98,98,255,0.4)',
+            // hoverBorderColor: 'rgba(98,98,255,0.4)',
             data: data,
           },
         ],
@@ -405,6 +415,13 @@ Depending on its value and its availibility through the search method used on in
     this.setState({
       missing_info: !this.state.missing_info
     });
+  }
+
+//toggles low_inventory in state
+  toggleRefill() {
+    this.setState({
+      low_inventory: !this.state.low_inventory
+    })
   }
 
  //handles changes in InventoryForm Component, changes State of item_id, inventoryquantity, and cpu

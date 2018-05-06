@@ -157,23 +157,23 @@ INSERT INTO used_items(item_id, order_id, used_quantity)
 INSERT INTO inventories(inventory_quantity, item_id)
   VALUES
   (
-    100,
+    60,
     1
   ),
   (
-    100,
+    60,
     2
   ),
   (
-    100,
+    60,
     3
   ),
   (
-    200,
+    60,
     4
   ),
   (
-    200,
+    51,
     5
   );
 
