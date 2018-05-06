@@ -9,7 +9,7 @@ const InventoryCosts = props => {
 
   return(
     <div>
-      <h1> Costs on Inventory </h1>
+      <h1> Inventory Expenses </h1>
 
       {props.inventoryCostData.map((cost) => (
         <div className="inventory-report">

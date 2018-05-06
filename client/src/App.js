@@ -163,12 +163,11 @@ class App extends Component {
     });
   }
 
-
+//helper function grabs inventory data and checks if less or more than 50 if so blue/red
   checkQuantity(data) {
     const blue = 'rgba(98,98,255,0.8)';
     const red = 'rgba(220,20,60,0.8)';
     const barColor = [];
-    // inventory_quantity < 50 ? 'rgba(255,98,98,0.8)' : 'rgba(98,98,255,0.8)';
     data.map((bar) => {
       console.log(bar, 'this is single bar');
       bar > 50 ? barColor.push(blue) : barColor.push(red);
