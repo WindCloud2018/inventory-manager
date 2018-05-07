@@ -17,14 +17,13 @@ const Inventory = props =>{
               <th> Inventory ID </th>
               <th> Inventory </th>
               <th> Inventory Quantity </th>
-              <th> + </th>
             </tr>
           </thead>
           <tbody>
             {props.inventories.map((inventory) => (
               <tr>
                 <th scope="row"> {inventory.inventory_id} </th>
-                <td> {inventory.item} </td>
+                <td> {inventory.item[0].toUpperCase() + inventory.item.slice(1)} </td>
                 <td> {inventory.inventory_quantity}</td>
                 <td> {inventory.cost_per_unit}</td>
             <Button
@@ -32,7 +31,7 @@ const Inventory = props =>{
             onClick={() => {
             props.toggle()
           }}>
-          <i className="fas fa-plus-circle fa-3x" > </i>
+          <i className="fas fa-plus-square fa-2x" > </i>
           </Button>
               </tr>
             ))}
