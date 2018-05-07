@@ -44,8 +44,10 @@ class App extends Component {
       totalCost: null,
       modal: false,
       missing_info: false,
+      low_inventory: false,
       inventoryCostData: [],
-      inventoryData: []
+      inventoryData: [],
+      barColor: []
     };
     this.getOrders = this.getOrders.bind(this);
     this.getInventories = this.getInventories.bind(this);
@@ -72,6 +74,7 @@ class App extends Component {
     this.getInventoryCostData = this.getInventoryCostData.bind(this);
     this.handleMonthYearChange = this.handleMonthYearChange.bind(this);
     this.preLoadInventoryCost = this.preLoadInventoryCost.bind(this);
+
   }
 
   componentDidMount() {
@@ -108,7 +111,7 @@ class App extends Component {
 
   lineChartDataHelper(year) {
     console.log("helper running")
-    // create array with length of 12, fill each with 0
+    // create array with length of 12, fill each with 0. then add 1 to each indice in data if year matches to represent a boolean 0,1 for month.
     const data = Array(12).fill(0);
     this.state.orders.map((order, i) => {
       const orderYear = order.order_date.split('-')[0]
@@ -121,7 +124,7 @@ class App extends Component {
   }
 
 
-
+//handleYearsView handles the tab selector and depending on the number you select the size of the array changes in getLineChartData.
   handleYearsView(e) {
     this.setState({
       salesYearToView: e,
@@ -160,23 +163,46 @@ class App extends Component {
     });
   }
 
+//helper function grabs inventory data and checks if less or more than 50 if so blue/red
+  checkQuantity(data) {
+    const blue = 'rgba(98,98,255,0.8)';
+    const red = 'rgba(220,20,60,0.8)';
+    const barColor = [];
+    data.map((bar) => {
+      console.log(bar, 'this is single bar');
+      bar > 50 ? barColor.push(blue) : barColor.push(red);
+    })
+    this.setState({
+      barColor: barColor,
+    })
+    console.log(barColor, 'this is colors for bars')
+  }
+
   getBarChartData() {
     const data = [];
     {this.state.inventories.map((inventory) => {
-      data.push(inventory.inventory_quantity)
+      data.push(inventory.inventory_quantity);
     })}
+    console.log(data, 'this is data after mapping inventory in barChart Data')
+    this.checkQuantity(data);
+
+    const items = this.state.items.map((item) => {
+      return item.item[0].toUpperCase() + item.item.slice(1);
+    });
+
+    const backgroundColor = 'rgba(98,98,255,0.8)';
 
     this.setState({
       barChartData: {
-        labels: this.state.months,
+        labels: items,
         datasets: [
           {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
+            label: 'Quantity',
+            backgroundColor: this.state.barColor,
+            borderColor: this.state.barColor,
             borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
+            // hoverBackgroundColor: 'rgba(98,98,255,0.4)',
+            // hoverBorderColor: 'rgba(98,98,255,0.4)',
             data: data,
           },
         ],
@@ -405,6 +431,13 @@ Depending on its value and its availibility through the search method used on in
     this.setState({
       missing_info: !this.state.missing_info
     });
+  }
+
+//toggles low_inventory in state
+  toggleRefill() {
+    this.setState({
+      low_inventory: !this.state.low_inventory
+    })
   }
 
  //handles changes in InventoryForm Component, changes State of item_id, inventoryquantity, and cpu

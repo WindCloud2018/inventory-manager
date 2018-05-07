@@ -17,7 +17,14 @@ const BarChart = props => {
             legend: {
               display: true,
               position: 'bottom'
-            }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            },
            }}
       />
   );
