@@ -19,6 +19,15 @@ const Sidebar = (props) => {
           <NavLink to="/overview">Overview</NavLink>
         </NavItem>
       </Nav>
+      <div className="footer">
+        <div className="footer-top">
+          <a href="https://github.com/WindCloud2018/inventory-manager" ><i className="fab fa-github-square fa-3x"/></a>
+        </div>
+
+        <div className="footer-bottom">
+          <p>By The WindCloud Team</p>
+        </div>
+      </div>
     </div>
   );
 };

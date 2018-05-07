@@ -506,7 +506,6 @@ Depending on its value and its availibility through the search method used on in
     // console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
       <div className="App">
-        <Header />
         <Sidebar />
         <div className="body-container">
 
@@ -584,7 +583,7 @@ Depending on its value and its availibility through the search method used on in
         <MissingInfoModal missing_info = {this.state.missing_info}
                           toggleMissing = {this.toggleMissing}
         />
-        <Footer />
+
       </div>
 
     );
