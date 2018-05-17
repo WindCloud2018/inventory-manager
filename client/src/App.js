@@ -5,7 +5,6 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
-import Header from './components/Header';
 import Sales from './components/Sales';
 import Overview from './components/Overview';
 import MissingInfoModal from './components/MissingInfoModal';
@@ -24,7 +23,7 @@ class App extends Component {
         'rgba(93,101,168,0.3)',
       ],
       orders: null,
-      inventories: null,
+      inventories: [],
       items: null,
       inventory_costs: null,
       dataLoaded: false,
@@ -506,7 +505,6 @@ Depending on its value and its availibility through the search method used on in
     // console.log(this.state.inventory_costs, 'this is inventory costs');
     return (
       <div className="App">
-        <Header />
         <Sidebar />
         <div className="body-container">
 

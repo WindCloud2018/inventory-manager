@@ -4,8 +4,6 @@ import InventoryCosts from './InventoryCosts';
 import Inventory from './Inventory';
 
 const Dashboard = props => {
-
-
     return (
       <div className="dashboard">
 

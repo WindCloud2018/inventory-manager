@@ -19,7 +19,7 @@ const InventoryCosts = props => {
               <th> Inventory </th>
               <th> Quantity </th>
               <th> Cost Per Unit </th>
-              <th> Total Cost </th>
+              <th> Total Expense </th>
               <th> Date Purchased</th>
             </tr>
           </thead>
@@ -30,7 +30,7 @@ const InventoryCosts = props => {
                 <td> {cost.item[0].toUpperCase() + cost.item.slice(1)} </td>
                 <td> {cost.inventory_quantity} </td>
                 <td> {cost.cost_per_unit} </td>
-                <td> {(cost.inventory_quantity * cost.cost_per_unit).toFixed(2)}</td>
+                <td> ${(cost.inventory_quantity * cost.cost_per_unit).toFixed(2)}</td>
                 <td> {cost.inventory_date.slice(0,10)} </td>
               </tr>
             ))}
