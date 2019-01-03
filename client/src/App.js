@@ -5,7 +5,6 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
-import Header from './components/Header';
 import Sales from './components/Sales';
 import Overview from './components/Overview';
 import MissingInfoModal from './components/MissingInfoModal';
@@ -23,10 +22,10 @@ class App extends Component {
         'rgba(255,128,150,0.3)',
         'rgba(93,101,168,0.3)',
       ],
-      orders: [],
+      orders: null,
       inventories: [],
-      items: [],
-      inventory_costs: [],
+      items: null,
+      inventory_costs: null,
       dataLoaded: false,
       currentDate: null,
       years: [],

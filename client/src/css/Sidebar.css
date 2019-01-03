@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: rgb(230,245,230);
+  background-color: rgba(0,255,0,0.5);
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -11,6 +11,10 @@
   text-decoration: none;
   list-style: none;
   padding: 15px;
+}
+
+.nav-link{
+  color:white;
 }
 
 .app-logo {
