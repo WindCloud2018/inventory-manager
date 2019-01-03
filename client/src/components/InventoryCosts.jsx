@@ -25,7 +25,7 @@ const InventoryCosts = props => {
           </thead>
           <tbody>
             {props.inventoryCostData.map((cost) => (
-              <tr>
+              <tr key={cost.inventory_cost_id}>
                 <th scope="row"> {cost.inventory_cost_id} </th>
                 <td> {cost.item[0].toUpperCase() + cost.item.slice(1)} </td>
                 <td> {cost.inventory_quantity} </td>

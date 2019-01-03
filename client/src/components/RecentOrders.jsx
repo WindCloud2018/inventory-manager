@@ -14,7 +14,7 @@ const RecentOrders = (props) => {
       <tbody>
         {props.orders.slice(0, 10).map((order) => (
 
-            <tr>
+            <tr key={order.order_id}>
               <th scope="row">{order.order_id}</th>
               <td>{order.order_date.split('T')[0]}</td>
             </tr>
