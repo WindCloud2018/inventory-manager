@@ -5,10 +5,15 @@
 Manage your restaurant inventory to reduce waste, calculate profit, and forecast.
 
 ### Why build this app?
-* To create an app that handles both relational and nonrelational database.
+* To create an app that handles inventory data using PostgresQL to handle relational databases. 
 * To run a streamline process that will complete number of tasks with single confirmation.
 * To add pass single AJAX call from front-end and let the complexity occurs in server-end when trying to do multiple AJAX calls from front-end.
-* To have all methods in App.js and all component as functional stateless component only. 
+* To have all methods in App.js and all component as functional stateless component only.
+
+### Update Features Planned
+* Incorporating Redux for state management.
+* Add OAuth to separate manager and employee, manager account have access to all features while employee should only access the Sales.
+* Order processing screen to the kitchen  
 
 ### How to get start
 * Make sure got NodeJS and npm installed
