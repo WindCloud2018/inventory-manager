@@ -5,6 +5,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: rgb(240,255,240);
 }
 
 .header {
@@ -27,7 +28,7 @@ body {
   text-align: center;
   min-height: 600px;
   align-content: left;
-
+  padding: 40px;
 }
 
 

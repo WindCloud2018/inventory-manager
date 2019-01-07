@@ -31,7 +31,7 @@ class App extends Component {
       years: [],
       currentMonth: null,
       currentYear: null,
-      lineChartData: null,
+      lineChartData: {},
       barChartData: {},
       salesYearToView: 1,
       salesModal: false,
@@ -582,7 +582,7 @@ Depending on its value and its availibility through the search method used on in
         <MissingInfoModal missing_info = {this.state.missing_info}
                           toggleMissing = {this.toggleMissing}
         />
-        <Footer />
+
       </div>
 
     );
